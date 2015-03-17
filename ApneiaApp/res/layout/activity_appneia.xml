@@ -4,9 +4,29 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <TextView
+    <Button
+        android:id="@+id/buttonNewRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="@string/new_record" />
+
+    <Button
+        android:id="@+id/buttonPastRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonNewRecord"
+        android:layout_centerHorizontal="true"
+        android:text="@string/past_records" />
+
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonPastRecords"
+        android:layout_centerHorizontal="true"
+        android:text="@string/settings" />
 
 </RelativeLayout>

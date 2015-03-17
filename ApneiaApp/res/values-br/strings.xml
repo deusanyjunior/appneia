@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_record">Novo registro</string>
+    <string name="past_records">Registros passados</string>
+    <string name="settings">Configurações</string>
+</resources>
