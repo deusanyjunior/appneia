@@ -1,10 +1,15 @@
+/**
+ * Past Records Activity
+ */
 package br.usp.appneia;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
+/**
+ * @author dj
+ *
+ */
 public class PastRecordsActivity extends Activity {
 
 	@Override

@@ -5,9 +5,17 @@
     <string name="new_record">New record</string>
     <string name="past_records">Past records</string>
     <string name="settings">settings</string>
-    <string name="title_activity_new_record_first_form">NewRecordFirstFormActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_past_records">PastRecordsActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_new_record_before_sleep_form">Appneia New Record Before Sleep Form</string>
+    <string name="title_activity_new_record_monitor">Appneia New Record Monitor</string>
+    <string name="title_activity_past_records">Appneia Past Records</string>
+    <string name="title_activity_settings">Appneia Settings</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="back">Back</string>
+    <string name="before_sleep_form">Before sleep form</string>
+    <string name="before_sleep_first_question">Did you sleep well?</string>
+    <string name="before_sleep_second_question">Have you taken any medication today?</string>
+    <string name="before_sleep_third_question">Did you consume some alcoholic beverage today?</string>
+    <string name="before_sleep_start_monitoring">Start monitoring</string>
 
 </resources>

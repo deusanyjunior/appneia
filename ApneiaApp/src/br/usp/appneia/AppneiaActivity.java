@@ -1,14 +1,20 @@
+/**
+ * Appneia Activity
+ */
 package br.usp.appneia;
 
+import br.usp.appneia.newrecord.BeforeSleepFormActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * @author dj
+ *
+ */
 public class AppneiaActivity extends Activity {
 
 	Context context = this;
@@ -26,19 +32,19 @@ public class AppneiaActivity extends Activity {
 	 */
 	private void setupButtons() {
 		
-		Button button_new_record = (Button) findViewById(R.id.buttonNewRecord);
-		button_new_record.setOnClickListener(onClickListenerButtonNewRecord());
+		Button buttonNewRecord = (Button) findViewById(R.id.buttonNewRecord);
+		buttonNewRecord.setOnClickListener(onClickListenerButtonNewRecord());
 		
-		Button button_past_records = (Button) findViewById(R.id.buttonPastRecords);
-		button_past_records.setOnClickListener(onClickListenerButtonPastRecords());
+		Button buttonPastRecords = (Button) findViewById(R.id.buttonPastRecords);
+		buttonPastRecords.setOnClickListener(onClickListenerButtonPastRecords());
 		
-		Button button_settings = (Button) findViewById(R.id.buttonSettings);
-		button_settings.setOnClickListener(onClickListenerButtonSettings());
+		Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
+		buttonSettings.setOnClickListener(onClickListenerButtonSettings());
 	}
 	
 	/**
 	 * Define the action of button New Record
-	 * @return the listener action that starts NewRecordFirstActivity
+	 * @return the listener action that starts BeforeSleepFormActivity
 	 */
 	private View.OnClickListener onClickListenerButtonNewRecord() {
 		
@@ -47,8 +53,9 @@ public class AppneiaActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				Intent intentNewRecord = new Intent(context, NewRecordFirstFormActivity.class);
-				startActivity(intentNewRecord);
+				Intent intent_NewRecordBeforeSleepForm = 
+						new Intent(context, BeforeSleepFormActivity.class);
+				startActivity(intent_NewRecordBeforeSleepForm);
 			}
 		};
 	}

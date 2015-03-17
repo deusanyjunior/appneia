@@ -4,10 +4,10 @@
 package br.usp.appneia.test;
 
 import br.usp.appneia.AppneiaActivity;
-import br.usp.appneia.NewRecordFirstFormActivity;
 import br.usp.appneia.PastRecordsActivity;
 import br.usp.appneia.R;
 import br.usp.appneia.SettingsActivity;
+import br.usp.appneia.newrecord.BeforeSleepFormActivity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
@@ -28,6 +28,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 	private Button mButtonSettings;
 	
 	public AppneiaActivityTest() {
+		
 		super(AppneiaActivity.class);
 	}
 	
@@ -63,20 +64,20 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 		final String actualLabel = mButtonNewRecord.getText().toString();
 		assertEquals(expectedLabel, actualLabel);
 		
-		ActivityMonitor mNewRecordFirstFormActivityMonitor = getInstrumentation()
-				.addMonitor(NewRecordFirstFormActivity.class.getName(), null, false);
+		ActivityMonitor mBeforeSleepFormActivityMonitor = getInstrumentation()
+				.addMonitor(BeforeSleepFormActivity.class.getName(), null, false);
 		
 		TouchUtils.clickView(this, mButtonNewRecord);
-		NewRecordFirstFormActivity mNewRecordFirstFormActivity = (NewRecordFirstFormActivity)
-				mNewRecordFirstFormActivityMonitor.waitForActivityWithTimeout(TIMEOUT_IN_MS);
+		BeforeSleepFormActivity mBeforeSleepFormActivity = (BeforeSleepFormActivity)
+				mBeforeSleepFormActivityMonitor.waitForActivityWithTimeout(TIMEOUT_IN_MS);
 		
-		assertNotNull("NewRecordFirstFormActivity is null", mNewRecordFirstFormActivity);
-		assertEquals("Monitor for NewRecordFirstFormActivity has not been called", 
-				1, mNewRecordFirstFormActivityMonitor.getHits());
-		assertEquals("NewRecordFirstFormActivity is of wrong type", 
-				NewRecordFirstFormActivity.class, mNewRecordFirstFormActivity.getClass());
+		assertNotNull("BeforeSleepFormActivity is null", mBeforeSleepFormActivity);
+		assertEquals("Monitor for BeforeSleepFormActivity has not been called", 
+				1, mBeforeSleepFormActivityMonitor.getHits());
+		assertEquals("BeforeSleepFormActivity is of wrong type", 
+				BeforeSleepFormActivity.class, mBeforeSleepFormActivity.getClass());
 				
-		getInstrumentation().removeMonitor(mNewRecordFirstFormActivityMonitor);
+		getInstrumentation().removeMonitor(mBeforeSleepFormActivityMonitor);
 		
 		// TODO: verify a better solution
 		this.sendKeys(KeyEvent.KEYCODE_BACK);

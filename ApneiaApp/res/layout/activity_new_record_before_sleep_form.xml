@@ -1,0 +1,130 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/textViewNewRecordBeforeSleepForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_record"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewBeforeSleepForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/before_sleep_form"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ScrollView
+        android:id="@+id/scrollViewBeforeSleepForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewBeforeSleepFormFirstQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_sleep_first_question"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupBeforeSleepFormFirstQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/radioBeforeSleepFormFirstQuestionYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/radioBeforeSleepFormFirstQuestionNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/no" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textViewBeforeSleepFormSecondQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_sleep_second_question"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupBeforeSleepFormSecondQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/radioBeforeSleepFormSecondQuestionYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/radioBeforeSleepFormSecondQuestionNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/no" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textViewBeforeSleepFormThirdQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_sleep_third_question"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+           <RadioGroup
+                android:id="@+id/radioGroupBeforeSleepFormThirdQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/radioBeforeSleepFormThirdQuestionYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/radioBeforeSleepFormThirdQuestionNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/no" />
+            </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonBeforeSleepFormStartMonitoring"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/before_sleep_start_monitoring" />
+
+    <Button
+        android:id="@+id/buttonBeforeSleepFormBack"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back" />
+
+</LinearLayout>
