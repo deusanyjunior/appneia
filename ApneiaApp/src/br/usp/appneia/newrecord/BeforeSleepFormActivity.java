@@ -48,7 +48,7 @@ public class BeforeSleepFormActivity extends Activity {
 	
 	/**
 	 * Define the action of button Start Monitoring
-	 * @return the listener action that starts MonitorActivity
+	 * @return the listener action that starts MonitoringActivity
 	 */
 	private View.OnClickListener onClickListenerButtonStartMonitoring() {
 		
@@ -57,7 +57,7 @@ public class BeforeSleepFormActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				Intent intentStartMonitoring = new Intent(context, MonitorActivity.class);
+				Intent intentStartMonitoring = new Intent(context, MonitoringActivity.class);
 				startActivity(intentStartMonitoring);
 			}
 		};

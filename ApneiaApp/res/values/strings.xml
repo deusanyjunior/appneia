@@ -6,7 +6,8 @@
     <string name="past_records">Past records</string>
     <string name="settings">settings</string>
     <string name="title_activity_new_record_before_sleep_form">Appneia New Record Before Sleep Form</string>
-    <string name="title_activity_new_record_monitor">Appneia New Record Monitor</string>
+    <string name="title_activity_new_record_monitoring">Appneia New Record Monitoring</string>
+    <string name="title_activity_new_record_after_sleep_form">Appneia New Record After Sleep Form</string>
     <string name="title_activity_past_records">Appneia Past Records</string>
     <string name="title_activity_settings">Appneia Settings</string>
     <string name="yes">Yes</string>
@@ -17,5 +18,8 @@
     <string name="before_sleep_second_question">Have you taken any medication today?</string>
     <string name="before_sleep_third_question">Did you consume some alcoholic beverage today?</string>
     <string name="before_sleep_start_monitoring">Start monitoring</string>
+    <string name="monitoring">Monitoring sleep</string>
+    <string name="monitoring_greeting">Have a good night\'s sleep!</string>
+    <string name="monitoring_finalization">Monitoring finalization</string>
 
 </resources>

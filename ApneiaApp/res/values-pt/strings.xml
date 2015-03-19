@@ -6,7 +6,8 @@
     <string name="past_records">Registros passados</string>
     <string name="settings">Configurações</string>
     <string name="title_activity_new_record_before_sleep_form">Appneia Novo Registro Formulário Pré-Sono</string>
-    <string name="title_activity_new_record_monitor">Appneia Novo Registro Monitor</string>
+    <string name="title_activity_new_record_monitoring">Appneia Novo Registro Monitoração</string>
+    <string name="title_activity_new_record_after_sleep_form">Appneia New Record After Sleep Form</string>
     <string name="title_activity_past_records">Appneia Registros passados</string>
     <string name="title_activity_settings">Appneia Configurações</string>
     <string name="yes">Sim</string>
@@ -15,7 +16,10 @@
     <string name="before_sleep_form">Questionário Pré-Sono</string>
     <string name="before_sleep_first_question">Dormiu bem na noite passada?</string>
     <string name="before_sleep_second_question">Tomou alguma medicação hoje?</string>
-    <string name="before_sleep_third_question">Tomou alguma bebida alcoólica?</string>
-    <string name="before_sleep_start_monitoring">Iniciar monitoramento</string>
-    
+    <string name="before_sleep_third_question">Tomou alguma bebida alcoólica hoje?</string>
+    <string name="before_sleep_start_monitoring">Iniciar monitoração</string>
+    <string name="monitoring">Monitorando sono</string>
+	<string name="monitoring_greeting">Tenha uma boa noite de sono!</string>
+	<string name="monitoring_finish_monitoring">Finalizar monitoração</string>
+	
 </resources>
