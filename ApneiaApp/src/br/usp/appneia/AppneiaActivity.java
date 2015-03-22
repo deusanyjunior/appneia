@@ -27,6 +27,12 @@ public class AppneiaActivity extends Activity {
 		setupButtons();
 	}
 	
+	@Override
+	public void onBackPressed() {
+		
+//		super.onBackPressed();
+	}
+	
 	/**
 	 * Configure the actions for each button
 	 */

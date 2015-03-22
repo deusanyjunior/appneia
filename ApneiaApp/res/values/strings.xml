@@ -21,5 +21,10 @@
     <string name="monitoring">Monitoring sleep</string>
     <string name="monitoring_greeting">Have a good night\'s sleep!</string>
     <string name="monitoring_finalization">Monitoring finalization</string>
+    <string name="after_sleep_form">After sleep form</string>
+    <string name="after_sleep_first_question">Did you sleep well tonight?</string>
+    <string name="after_sleep_second_question">Did you have any difficulty falling asleep?</string>
+    <string name="after_sleep_third_question">Did you wake up during the night?</string>
+    <string name="after_sleep_save">Save</string>
 
 </resources>

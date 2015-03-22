@@ -21,5 +21,10 @@
     <string name="monitoring">Monitorando sono</string>
 	<string name="monitoring_greeting">Tenha uma boa noite de sono!</string>
 	<string name="monitoring_finish_monitoring">Finalizar monitoração</string>
+	<string name="after_sleep_form">Questionário Pós-Sono</string>
+    <string name="after_sleep_first_question">Dormiu bem esta noite?</string>
+    <string name="after_sleep_second_question">Teve dificuldades para pegar no sono?</string>
+    <string name="after_sleep_third_question">Acordou alguma vez esta noite?</string>
+    <string name="after_sleep_save">Salvar</string>
 	
 </resources>
