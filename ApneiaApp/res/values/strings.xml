@@ -4,7 +4,7 @@
     <string name="app_name">Appneia</string>
     <string name="new_record">New record</string>
     <string name="past_records">Past records</string>
-    <string name="settings">settings</string>
+    <string name="settings">Settings</string>
     <string name="title_activity_new_record_before_sleep_form">Appneia New Record Before Sleep Form</string>
     <string name="title_activity_new_record_monitoring">Appneia New Record Monitoring</string>
     <string name="title_activity_new_record_after_sleep_form">Appneia New Record After Sleep Form</string>
@@ -13,6 +13,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="back">Back</string>
+    <string name="save">Save</string>
     <string name="before_sleep_form">Before sleep form</string>
     <string name="before_sleep_first_question">Did you sleep well?</string>
     <string name="before_sleep_second_question">Have you taken any medication today?</string>
@@ -20,11 +21,25 @@
     <string name="before_sleep_start_monitoring">Start monitoring</string>
     <string name="monitoring">Monitoring sleep</string>
     <string name="monitoring_greeting">Have a good night\'s sleep!</string>
-    <string name="monitoring_finalization">Monitoring finalization</string>
+    <string name="monitoring_finalize_monitoring">Monitoring finalization</string>
     <string name="after_sleep_form">After sleep form</string>
     <string name="after_sleep_first_question">Did you sleep well tonight?</string>
     <string name="after_sleep_second_question">Did you have any difficulty falling asleep?</string>
     <string name="after_sleep_third_question">Did you wake up during the night?</string>
-    <string name="after_sleep_save">Save</string>
+    <string name="after_sleep_finalize">Finalize</string>
+    <string name="settings_definitions">Definitios</string>
+    <string name="settings_records_folder">Records folder</string>
+    <string name="settings_recording_format">Recording format</string>
+    <string name="settings_mp3">MP3</string>
+    <string name="settings_wave">WAVE</string>
+    <string name="settings_3gp">3GP</string>
+    <string name="settings_audio_input">Audio input</string>
+    <string name="settings_audio_sample_rate">Audio sample rate in Hz</string>
+    <string name="settings_audio_channels">Number of input channels</string>
+    <string name="settings_mp3_kbps">MP3 kbps</string>
+    <string name="settings_pcm_encoding">PCM encoding</string>
+    <string name="settings_sensors">Sensors</string>
+    <string name="settings_sensor_checkbox_example">Sensor 1</string>
+    <string name="settings_sensors_sample_rate">Sensors sample rate</string>
 
 </resources>

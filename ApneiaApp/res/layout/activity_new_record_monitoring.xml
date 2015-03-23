@@ -21,8 +21,9 @@
 
     <ScrollView
         android:id="@+id/scrollViewMonitoring"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@android:color/background_light" >
 
         <LinearLayout
@@ -44,9 +45,9 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/buttonMonitoringFinishMonitoring"
+        android:id="@+id/buttonMonitoringFinalizeMonitoring"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/monitoring_finish_monitoring" />
+        android:text="@string/monitoring_finalize_monitoring" />
     
 </LinearLayout>

@@ -41,9 +41,6 @@ public class BeforeSleepFormActivity extends Activity {
 		
 		Button buttonStartMonitoring = (Button) findViewById(R.id.buttonBeforeSleepFormStartMonitoring);
 		buttonStartMonitoring.setOnClickListener(onClickListenerButtonStartMonitoring());
-		
-		Button buttonBack = (Button) findViewById(R.id.buttonBeforeSleepFormBack);
-		buttonBack.setOnClickListener(onClickListenerButtonBack());
 	}
 	
 	/**
@@ -61,22 +58,5 @@ public class BeforeSleepFormActivity extends Activity {
 				startActivity(intentStartMonitoring);
 			}
 		};
-	}
-	
-	/**
-	 * Define the action of button Back
-	 * @return the listener action that finishes this activity and goes back
-	 */
-	private View.OnClickListener onClickListenerButtonBack() {
-		
-		return new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				finish();
-			}
-		};
-	}
-	
+	}	
 }

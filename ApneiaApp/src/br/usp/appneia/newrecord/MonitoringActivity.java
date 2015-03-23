@@ -32,7 +32,7 @@ public class MonitoringActivity extends Activity {
 	 */
 	public void setupButtons() {
 		
-		Button button_monitoring_finalization = (Button) findViewById(R.id.buttonMonitoringFinishMonitoring);
+		Button button_monitoring_finalization = (Button) findViewById(R.id.buttonMonitoringFinalizeMonitoring);
 		button_monitoring_finalization.setOnClickListener(onClickListenerButtonMonitoringFinalization());
 	}
 	

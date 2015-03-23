@@ -238,7 +238,7 @@ public class AfterSleepFormActivityTest extends
 	public void testZZAfterSleepFormActivity_ButtonSave() {
 
 		final String expectedLabel = mAfterSleepFormActivity
-				.getString(R.string.after_sleep_save);
+				.getString(R.string.after_sleep_finalize);
 		final String actualLabel = mButtonSave.getText().toString();
 		assertEquals(expectedLabel, actualLabel);
 

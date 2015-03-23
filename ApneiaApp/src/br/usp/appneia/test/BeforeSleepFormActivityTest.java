@@ -25,7 +25,6 @@ public class BeforeSleepFormActivityTest extends
 
 	private BeforeSleepFormActivity mBeforeSleepFormActivity;
 	private Button mButtonStartMonitoring;
-	private Button mButtonBack;
 
 	private RadioGroup mRadioGroupBeforeSleepFormFirstQuestion;
 	private RadioButton mRadioBeforeSleepFormFirstQuestionYes;
@@ -53,9 +52,7 @@ public class BeforeSleepFormActivityTest extends
 		mBeforeSleepFormActivity = getActivity();
 		mButtonStartMonitoring = (Button) mBeforeSleepFormActivity
 				.findViewById(R.id.buttonBeforeSleepFormStartMonitoring);
-		mButtonBack = (Button) mBeforeSleepFormActivity
-				.findViewById(R.id.buttonBeforeSleepFormBack);
-
+		
 		mRadioGroupBeforeSleepFormFirstQuestion = (RadioGroup) mBeforeSleepFormActivity
 				.findViewById(R.id.radioGroupBeforeSleepFormFirstQuestion);
 		mRadioBeforeSleepFormFirstQuestionYes = (RadioButton) mBeforeSleepFormActivity
@@ -86,7 +83,6 @@ public class BeforeSleepFormActivityTest extends
 		assertNotNull("mBeforeSleepFormActivity is null",
 				mBeforeSleepFormActivity);
 		assertNotNull("mButtonStartMonitoring is null", mButtonStartMonitoring);
-		assertNotNull("mButtonBack is null", mButtonBack);
 
 		assertNotNull("mRadioGroupBeforeSleepFormFirstQuestion is null",
 				mRadioGroupBeforeSleepFormFirstQuestion);
@@ -267,14 +263,4 @@ public class BeforeSleepFormActivityTest extends
 		// TODO: verify a better solution
 		this.sendKeys(KeyEvent.KEYCODE_BACK);
 	}
-
-	public void testBeforeSleepFormActivity_ButtonBack() {
-
-		final String expectedLabel = mBeforeSleepFormActivity
-				.getString(R.string.back);
-		final String actualLabel = mButtonBack.getText().toString();
-		assertEquals(expectedLabel, actualLabel);
-
-	}
-
 }

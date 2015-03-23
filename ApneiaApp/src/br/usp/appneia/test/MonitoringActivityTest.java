@@ -36,7 +36,7 @@ public class MonitoringActivityTest extends
 		
 		mMonitoringActivity = getActivity();
 		mButtonMonitoringFinishMonitoring = (Button) mMonitoringActivity
-				.findViewById(R.id.buttonMonitoringFinishMonitoring);
+				.findViewById(R.id.buttonMonitoringFinalizeMonitoring);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class MonitoringActivityTest extends
 	 */
 	public void testMonitoringActivity_ButtonMonitoringFinishMonitoring() {
 		
-		final String expectedLabel = mMonitoringActivity.getString(R.string.monitoring_finish_monitoring);
+		final String expectedLabel = mMonitoringActivity.getString(R.string.monitoring_finalize_monitoring);
 		final String actualLabel = mButtonMonitoringFinishMonitoring.getText().toString();
 		assertEquals(expectedLabel, actualLabel);
 		
