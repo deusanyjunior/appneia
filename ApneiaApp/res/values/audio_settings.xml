@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="audiosources"> <!-- MediaRecorder.AudioSource -->
+        <item>Default</item>
+        <item>Mic</item>
+        <item>Voice uplink</item>
+        <item>Voice downlink</item>
+        <item>Voice call</item>
+        <item>Camera Mic</item> <!-- CAMCODER -->
+        <item>Voice recognition</item>
+        <item>Voice communication</item>
+        <item>Remote submix</item>
+    </string-array>
+    
+    <string-array name="samplerateshz">
+        <item>8000</item>
+        <item>11025</item>
+        <item>16000</item>
+        <item>22015</item>
+        <item>44100</item>
+        <item>48000</item>
+        <item>88200</item>
+        <item>96000</item>
+    </string-array>
+
+    <string-array name="bitrates">
+        <item>16</item>
+        <item>8</item>
+    </string-array>
+    
+    <string-array name="encodingformats"> <!-- AudioFormat -->
+        <item>16 BIT</item> <!-- ENCODING_PCM_16BIT -->
+        <item>8 BIT</item> <!-- ENCODING_PCM_8BIT -->
+    </string-array>
+    
+    <string-array name="numberofchannels">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="channeltypes"> <!-- AudioFormat -->
+        <item>Default</item> <!-- AudioFormat.CHANNEL_IN_DEFAULT -->
+        <item>Mono</item> <!-- AudioFormat.CHANNEL_IN_MONO -->
+        <item>Stereo</item> <!-- AudioFormat.CHANNEL_IN_STEREO -->
+    </string-array>
+</resources>

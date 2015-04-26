@@ -3,17 +3,18 @@
     
     <string name="app_name">Appneia</string>
     <string name="new_record">Novo registro</string>
-    <string name="past_records">Registros passados</string>
+    <string name="stored_records">Registros armazenados</string>
     <string name="settings">Configurações</string>
     <string name="title_activity_new_record_before_sleep_form">Appneia Novo Registro Formulário Pré-Sono</string>
     <string name="title_activity_new_record_monitoring">Appneia Novo Registro Monitoração</string>
     <string name="title_activity_new_record_after_sleep_form">Appneia New Record After Sleep Form</string>
-    <string name="title_activity_past_records">Appneia Registros passados</string>
+    <string name="title_activity_stored_records">Appneia Registros armazenados</string>
     <string name="title_activity_settings">Appneia Configurações</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="back">Voltar</string>
     <string name="save">Salvar</string>
+    <string name="loading">Carregando..</string>
     <string name="before_sleep_form">Questionário Pré-Sono</string>
     <string name="before_sleep_first_question">Dormiu bem na noite passada?</string>
     <string name="before_sleep_second_question">Tomou alguma medicação hoje?</string>
@@ -29,11 +30,12 @@
     <string name="after_sleep_finalize">Finalizar</string>
     <string name="settings_definitions">Definições</string>
     <string name="settings_records_folder">Pasta dos registros</string>
+    <string name="settings_records_folder_free_space"> MB de espaço livre</string>
     <string name="settings_recording_format">Formato de gravação</string>
     <string name="settings_mp3">MP3</string>
     <string name="settings_wave">WAVE</string>
     <string name="settings_3gp">3GP</string>
-    <string name="settings_audio_input">Entrada de áudio</string>
+    <string name="settings_audio_source">Fonte de áudio</string>
     <string name="settings_audio_sample_rate">Amostragem em Hz</string>
     <string name="settings_audio_channels">Quantidade de canais</string>
     <string name="settings_mp3_kbps">MP3 kbps</string>
@@ -41,5 +43,6 @@
     <string name="settings_sensors">Sensores</string>
     <string name="settings_sensor_checkbox_example">Sensor 1</string>
     <string name="settings_sensors_sample_rate">Amostragem dos sensores</string>
+    <string name="stored_records_list">Lista</string>
 	
 </resources>

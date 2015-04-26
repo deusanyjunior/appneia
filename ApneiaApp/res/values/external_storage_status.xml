@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="toast_device_utils_media_mounted">Storage is OK. Media mounted</string>
+	<string name="toast_device_utils_media_mounted_read_only">Warning, the external storage is only in read mode. This does not result in malfunction</string>
+	<string name="toast_device_utils_media_nofs">Error, the external storage cannot be used. It is not in a corret format or it is not formated.</string>
+	<string name="toast_device_utils_media_removed">Error, the external storage was not found. Please insert a external storage on the device.</string>
+	<string name="toast_device_utils_media_shared">Error, the external storage is not mounted because it is shared or connected through the USB. Plug out and try again.</string>              
+	<string name="toast_device_utils_media_unmountable">Error, the external storage cannot be mounted. This may be happen when the external storage is corrupted or crashed.</string>
+	<string name="toast_device_utils_media_unmounted">Error, the external storage is on the device but it is not mounted. Please, mount it.</string>
+    
+</resources>

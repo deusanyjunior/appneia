@@ -15,6 +15,6 @@ public class PastRecordsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_past_records);
+		setContentView(R.layout.activity_stored_records);
 	}
 }

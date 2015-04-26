@@ -4,6 +4,7 @@
 package br.usp.appneia;
 
 import br.usp.appneia.newrecord.BeforeSleepFormActivity;
+import br.usp.appneia.settings.SettingsActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -47,7 +48,7 @@ public class AppneiaActivity extends Activity {
 		Button buttonNewRecord = (Button) findViewById(R.id.buttonNewRecord);
 		buttonNewRecord.setOnClickListener(onClickListenerButtonNewRecord());
 		
-		Button buttonPastRecords = (Button) findViewById(R.id.buttonPastRecords);
+		Button buttonPastRecords = (Button) findViewById(R.id.buttonStoredRecords);
 		buttonPastRecords.setOnClickListener(onClickListenerButtonPastRecords());
 		
 		Button buttonSettings = (Button) findViewById(R.id.buttonSettings);

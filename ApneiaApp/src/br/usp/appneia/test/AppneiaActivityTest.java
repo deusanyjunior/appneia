@@ -6,8 +6,8 @@ package br.usp.appneia.test;
 import br.usp.appneia.AppneiaActivity;
 import br.usp.appneia.PastRecordsActivity;
 import br.usp.appneia.R;
-import br.usp.appneia.SettingsActivity;
 import br.usp.appneia.newrecord.BeforeSleepFormActivity;
+import br.usp.appneia.settings.SettingsActivity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
@@ -24,7 +24,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 	
 	private AppneiaActivity mAppneiaActivity;
 	private Button mButtonNewRecord;
-	private Button mButtonPastRecords;
+	private Button mButtonStoredRecords;
 	private Button mButtonSettings;
 	
 	public AppneiaActivityTest() {
@@ -40,7 +40,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 		
 		mAppneiaActivity = getActivity();
 		mButtonNewRecord = (Button) mAppneiaActivity.findViewById(R.id.buttonNewRecord);
-		mButtonPastRecords = (Button) mAppneiaActivity.findViewById(R.id.buttonPastRecords);
+		mButtonStoredRecords = (Button) mAppneiaActivity.findViewById(R.id.buttonStoredRecords);
 		mButtonSettings = (Button) mAppneiaActivity.findViewById(R.id.buttonSettings);
 	}
 
@@ -51,7 +51,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 		
 		assertNotNull("mAppneiaActivity is null", mAppneiaActivity);
 		assertNotNull("mButtonNewRecord is null", mButtonNewRecord);
-		assertNotNull("mButtonPastRecords is null", mButtonPastRecords);
+		assertNotNull("mButtonStoredRecords is null", mButtonStoredRecords);
 		assertNotNull("mButtonSettings is null", mButtonSettings);
 	}
 	
@@ -88,14 +88,14 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 	 */
 	public void testAppneiaActivityButtonPastRecords() {
 		
-		final String expectedLabel = mAppneiaActivity.getString(R.string.past_records);
-		final String actualLabel = mButtonPastRecords.getText().toString();
+		final String expectedLabel = mAppneiaActivity.getString(R.string.stored_records);
+		final String actualLabel = mButtonStoredRecords.getText().toString();
 		assertEquals(expectedLabel, actualLabel);
 		
 		ActivityMonitor mPastRecordsActivityMonitor = getInstrumentation()
 				.addMonitor(PastRecordsActivity.class.getName(), null, false);
 		
-		TouchUtils.clickView(this, mButtonPastRecords);
+		TouchUtils.clickView(this, mButtonStoredRecords);
 		PastRecordsActivity mPastRecordsActivity = (PastRecordsActivity)
 				mPastRecordsActivityMonitor.waitForActivityWithTimeout(TIMEOUT_IN_MS);
 		

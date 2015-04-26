@@ -14,18 +14,18 @@
         android:text="@string/new_record" />
 
     <Button
-        android:id="@+id/buttonPastRecords"
+        android:id="@+id/buttonStoredRecords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonNewRecord"
         android:layout_centerHorizontal="true"
-        android:text="@string/past_records" />
+        android:text="@string/stored_records" />
 
     <Button
         android:id="@+id/buttonSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonPastRecords"
+        android:layout_below="@+id/buttonStoredRecords"
         android:layout_centerHorizontal="true"
         android:text="@string/settings" />
 
