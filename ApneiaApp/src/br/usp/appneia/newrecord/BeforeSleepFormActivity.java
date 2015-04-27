@@ -3,10 +3,6 @@
  */
 package br.usp.appneia.newrecord;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -21,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 /**
  * @author dj
@@ -31,9 +28,7 @@ public class BeforeSleepFormActivity extends Activity {
 	Activity activity = this;
 	Context context = this;
 	
-	StringBuilder recordFolderPath;
-	File recordFolder;
-	boolean folderCreated;
+	String recordFolderPath = null;
 	
 	int firstAnswer = -1;
 	int secondAnswer = -1;
@@ -44,10 +39,12 @@ public class BeforeSleepFormActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_record_before_sleep_form);
 		
-		folderCreated = setupRecordFolder();
-		if (folderCreated) {
-			String recordDetails = getResources().getString(R.string.file_record_details);
-			writeDataFile(recordDetails, DeviceUtils.getBuildInfo());
+		// folder name is based on date and time
+		String recordFolder = new SimpleDateFormat("yyMMdd-HHmmss", Locale.US).format(new Date());
+		recordFolderPath = DeviceUtils.setupRecordFolder(context, recordFolder);
+		if (recordFolderPath != null) {
+			String fileNameRecordDetails = getResources().getString(R.string.file_record_details);
+			DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordDetails, DeviceUtils.getBuildInfo());
 		}
 		setupButtons();
 	}
@@ -62,71 +59,6 @@ public class BeforeSleepFormActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Set the record folder based on the date and time
-	 * @return true if the folder has been created successfully.
-	 */
-	private boolean setupRecordFolder() {
-		
-		if (!DeviceUtils.verifyStorageStatus()) {
-			DeviceUtils.toastAllStorageStatus(context);
-			return false;
-		};
-		
-		String storagePath = DeviceUtils.getStoragePath();
-		File appFolder = new File(storagePath+"/"+getResources().getString(R.string.app_name));
-		if (!appFolder.exists() && !appFolder.mkdirs()) {
-			return false;
-		} else if (!appFolder.isDirectory()) {
-			return false;
-		}
-		
-		String date = new SimpleDateFormat("yyMMdd-HHmmss", Locale.US).format(new Date());
-		recordFolderPath = new StringBuilder();
-		recordFolderPath.append(appFolder);
-		recordFolderPath.append("/");
-		recordFolderPath.append(date);
-		recordFolder = new File(recordFolderPath.toString());
-		if (!recordFolder.exists() && !recordFolder.mkdirs()) {
-			return false;
-		} else if (!recordFolder.isDirectory()) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * Write data on file
-	 * 
-	 * @param filePath is the path to file to write the data
-	 * @param data to be written
-	 * @return true if the data has been written successfully
-	 */
-	private boolean writeDataFile(String filePath, String data) {
-		
-		File file = new File(recordFolder.getAbsolutePath(), filePath);
-		if (file.isDirectory()) {
-			return false;
-		} 
-		
-		try {
-			FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath(), true); // Append the content
-			outputStream.write(data.getBytes());
-			outputStream.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
 	}
 	
 	/**
@@ -149,11 +81,21 @@ public class BeforeSleepFormActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				if (verifyCheckBoxes() && saveAnswers()) {
+				if (verifyCheckBoxes()) {
 					
-					Intent intentStartMonitoring = new Intent(context, MonitoringActivity.class);
-					startActivity(intentStartMonitoring);
-					finish();
+					if (saveAnswers()) {
+						
+						Intent intentStartMonitoring = new Intent(context, MonitoringActivity.class);
+						intentStartMonitoring.putExtra("recordFolderPath", recordFolderPath);
+						startActivity(intentStartMonitoring);
+						finish();
+					} else {
+						
+						Toast.makeText(context, activity.getResources().getString(R.string.error_saving), Toast.LENGTH_LONG).show();
+					}
+				} else {
+					
+					Toast.makeText(context, activity.getResources().getString(R.string.error_form), Toast.LENGTH_LONG).show();
 				}
 			}
 		};
@@ -190,7 +132,7 @@ public class BeforeSleepFormActivity extends Activity {
 		//TODO: unsafe conversions!
 		try {
 			 
-			String recordDetails = getResources().getString(R.string.file_record_details);
+			String fileNameRecordDetails = getResources().getString(R.string.file_record_details);
 			String answer1 = ((RadioButton) activity.findViewById(firstAnswer)).getText().toString();
 			String answer2 = ((RadioButton) activity.findViewById(secondAnswer)).getText().toString();
 			String answer3 = ((RadioButton) activity.findViewById(thirdAnswer)).getText().toString();
@@ -204,8 +146,7 @@ public class BeforeSleepFormActivity extends Activity {
 			answers.append(answer2);
 			answers.append(" ");
 			answers.append(answer3);
-			answers.append("\n");
-			return writeDataFile(recordDetails, answers.toString());
+			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordDetails, answers.toString());
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			return false;

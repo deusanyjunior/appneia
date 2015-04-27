@@ -1,6 +1,10 @@
 package br.usp.appneia.settings;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -223,6 +227,82 @@ public class DeviceUtils {
 			
 		return info.toString();
 	}
+	
+	
+
+	/**
+	 * Set the record folder based on the name
+	 * @return a full path if the folder has been created successfully, or null otherwise.
+	 */
+	public static String setupRecordFolder(Context context, String folderName) {
+		
+		String tempRecordFolderPath = null;
+		
+		if (!verifyStorageStatus()) {
+			toastAllStorageStatus(context);
+			return null;
+		};
+		
+		// verify the storage path
+		String storagePath = getStoragePath();
+		File appFolder = new File(storagePath+"/"+context.getResources().getString(R.string.app_name));
+		if (!appFolder.exists() && !appFolder.mkdirs()) {
+			return null;
+		} else if (!appFolder.isDirectory()) {
+			return null;
+		}
+		
+		// create the record folder path
+		StringBuilder recordFolderPathBuilder = new StringBuilder();
+		recordFolderPathBuilder.append(appFolder);
+		recordFolderPathBuilder.append("/");
+		recordFolderPathBuilder.append(folderName);
+		tempRecordFolderPath = recordFolderPathBuilder.toString();
+		File recordFolderFile = new File(tempRecordFolderPath);
+		if (!recordFolderFile.exists() && !recordFolderFile.mkdirs()) {
+			return null;
+		} else if (!recordFolderFile.isDirectory()) {
+			return null;
+		}
+		
+		return tempRecordFolderPath;
+	}
+	
+	/**
+	 * Write data on file
+	 * 
+	 * @param filePath is the path to file to write the data
+	 * @param fileName is the name of the file to write the data
+	 * @param data to be written
+	 * @return true if the data has been written successfully
+	 */
+	public static boolean writeDataOnFile(String filePath, String fileName, String data) {
+		
+		File file = new File(filePath, fileName);
+		if (file.isDirectory()) {
+			return false;
+		} 
+		
+		try {
+			FileOutputStream outputStream = new FileOutputStream(file, true); // Append the content
+			OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream);
+			outputWriter.append(data);
+			outputWriter.close();
+			outputStream.flush();
+			outputStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
 	
 	
 	/**

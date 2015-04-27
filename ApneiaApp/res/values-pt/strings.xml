@@ -15,6 +15,8 @@
     <string name="back">Voltar</string>
     <string name="save">Salvar</string>
     <string name="loading">Carregando..</string>
+    <string name="error_form">Desculpe, você precisa responder todas as questões.</string>
+    <string name="error_saving">Desculpe, houve um erro ao tentar salvar dados em seu dispositivo.</string>
     <string name="before_sleep_form">Questionário Pré-Sono</string>
     <string name="before_sleep_first_question">Dormiu bem na noite passada?</string>
     <string name="before_sleep_second_question">Tomou alguma medicação hoje?</string>

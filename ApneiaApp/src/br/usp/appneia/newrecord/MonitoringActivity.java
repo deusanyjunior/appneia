@@ -18,12 +18,14 @@ import android.widget.Button;
 public class MonitoringActivity extends Activity {
 
 	Context context = this;
+	String recordFolderPath = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_record_monitoring);
 		
+		recordFolderPath = getIntent().getExtras().getString("recordFolderPath");
 		setupButtons();
 	}
 	
@@ -60,6 +62,7 @@ public class MonitoringActivity extends Activity {
 			public void onClick(View v) {
 				
 				Intent intentMonitoringFinalization = new Intent(context, AfterSleepFormActivity.class);
+				intentMonitoringFinalization.putExtra("recordFolderPath", recordFolderPath);
 				startActivity(intentMonitoringFinalization);
 				finish();
 			}
