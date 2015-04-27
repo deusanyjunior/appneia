@@ -29,6 +29,18 @@ public class AfterSleepFormActivity extends Activity {
 		setupButtons();
 	}
 	
+	@Override
+	public void onBackPressed() {
+		
+		//TODO: ask user
+		try {
+			finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Configure actions for each button
 	 */
@@ -51,6 +63,7 @@ public class AfterSleepFormActivity extends Activity {
 				
 				Intent intentSave = new Intent(context, AppneiaActivity.class);
 				startActivity(intentSave);
+				finish();
 			}
 		};
 	}

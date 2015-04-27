@@ -27,6 +27,18 @@ public class MonitoringActivity extends Activity {
 		setupButtons();
 	}
 	
+	@Override
+	public void onBackPressed() {
+		
+		//TODO: ask user
+		try {
+			finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Configure actions for each button
 	 */
@@ -49,6 +61,7 @@ public class MonitoringActivity extends Activity {
 				
 				Intent intentMonitoringFinalization = new Intent(context, AfterSleepFormActivity.class);
 				startActivity(intentMonitoringFinalization);
+				finish();
 			}
 		};
 	}

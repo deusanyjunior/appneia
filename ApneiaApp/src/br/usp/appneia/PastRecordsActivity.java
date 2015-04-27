@@ -17,4 +17,5 @@ public class PastRecordsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stored_records);
 	}
+	
 }

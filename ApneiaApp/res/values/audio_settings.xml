@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <string-array name="mp3kbps">
+        <item>32</item>
+        <item>64</item>
+        <item>96</item>
+        <item>128</item>
+        <item>160</item>
+        <item>256</item>
+        <item>320</item>
+    </string-array>
+    
     <string-array name="audiosources"> <!-- MediaRecorder.AudioSource -->
         <item>Default</item>
         <item>Mic</item>
@@ -23,16 +33,6 @@
         <item>88200</item>
         <item>96000</item>
     </string-array>
-
-    <string-array name="bitrates">
-        <item>16</item>
-        <item>8</item>
-    </string-array>
-    
-    <string-array name="encodingformats"> <!-- AudioFormat -->
-        <item>16 BIT</item> <!-- ENCODING_PCM_16BIT -->
-        <item>8 BIT</item> <!-- ENCODING_PCM_8BIT -->
-    </string-array>
     
     <string-array name="numberofchannels">
         <item>1</item>
@@ -44,4 +44,16 @@
         <item>Mono</item> <!-- AudioFormat.CHANNEL_IN_MONO -->
         <item>Stereo</item> <!-- AudioFormat.CHANNEL_IN_STEREO -->
     </string-array>
+
+    <string-array name="bitrates">
+        <item>16</item>
+        <item>8</item>
+    </string-array>
+    
+    <string-array name="encodingformats"> <!-- AudioFormat -->
+        <item>16 BIT</item> <!-- ENCODING_PCM_16BIT -->
+        <item>8 BIT</item> <!-- ENCODING_PCM_8BIT -->
+    </string-array>
+    
+    
 </resources>

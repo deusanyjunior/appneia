@@ -2,6 +2,7 @@ package br.usp.appneia.settings;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import br.usp.appneia.R;
@@ -35,7 +36,7 @@ public class DeviceUtils {
 	/**
 	 * Returns the storage directory used to save files.
 	 * 
-	 * @return String path of the storage directory
+	 * @return String path to the storage directory
 	 */
 	public static String getStoragePath() {
 		
@@ -202,11 +203,11 @@ public class DeviceUtils {
 		if (build >= android.os.Build.VERSION_CODES.GINGERBREAD)
 			info.append("# serial: "+android.os.Build.SERIAL+"\n");  									// API Level 9
 		if (build >= android.os.Build.VERSION_CODES.LOLLIPOP)
-			info.append("# supported_32_bit_abis: " + android.os.Build.SUPPORTED_32_BIT_ABIS + "\n");	// API Level 21
+			info.append("# supported_32_bit_abis: " + Arrays.toString(android.os.Build.SUPPORTED_32_BIT_ABIS) + "\n");	// API Level 21
 		if (build >= android.os.Build.VERSION_CODES.LOLLIPOP)
-			info.append("# supported_64_bit_abis: " + android.os.Build.SUPPORTED_64_BIT_ABIS + "\n");	// API Level 21
+			info.append("# supported_64_bit_abis: " + Arrays.toString(android.os.Build.SUPPORTED_64_BIT_ABIS) + "\n");	// API Level 21
 		if (build >= android.os.Build.VERSION_CODES.LOLLIPOP)
-			info.append("# supported_abis: " + android.os.Build.SUPPORTED_ABIS + "\n");					// API Level 21
+			info.append("# supported_abis: " + Arrays.toString(android.os.Build.SUPPORTED_ABIS) + "\n");					// API Level 21
 			info.append("# tags: " + android.os.Build.TAGS + "\n");										// API Level 1
 			info.append("# time: " + android.os.Build.TIME + "\n");										// API Level 1
 			info.append("# type: " + android.os.Build.TYPE + "\n");										// API Level 1

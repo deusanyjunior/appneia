@@ -37,7 +37,7 @@ public class SettingsActivity extends Activity {
 	}
 	
 	/**
-	 * Define the folder to save the records and verify the free space.
+	 * Show the folder where the records will be saved, and verify the free space.
 	 */
 	private void setRecordsFolderInfo() {
 		

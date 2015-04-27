@@ -31,13 +31,8 @@ public class AppneiaActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		
-		super.onBackPressed();
-		try {
-			finalize();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//TODO: ask user or
+		finish(); // 'him!
 	}
 	
 	/**
@@ -69,6 +64,7 @@ public class AppneiaActivity extends Activity {
 				Intent intent_NewRecordBeforeSleepForm = 
 						new Intent(context, BeforeSleepFormActivity.class);
 				startActivity(intent_NewRecordBeforeSleepForm);
+				finish();
 			}
 		};
 	}
@@ -86,6 +82,7 @@ public class AppneiaActivity extends Activity {
 				
 				Intent intentPastRecords = new Intent(context, PastRecordsActivity.class);
 				startActivity(intentPastRecords);
+//				finish(); // in this case it isn't necessary
 			}
 		};
 	}
@@ -102,7 +99,8 @@ public class AppneiaActivity extends Activity {
 			public void onClick(View v) {
 				
 				Intent intentSettings = new Intent(context, SettingsActivity.class);
-				startActivity(intentSettings);				
+				startActivity(intentSettings);
+//				finish(); // in this case it isn't necessary
 			}
 		};
 	}
