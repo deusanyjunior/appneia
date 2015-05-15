@@ -9,6 +9,7 @@ import br.usp.appneia.R;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -24,33 +25,50 @@ public class SpinnerManager {
 	private LinkedList<int[]> validAudioRecordSettings;
 	
 	/*
-	 * Maps from resources and available configurations.
+	 * Maps from resources and available configurations. String and Integer
 	 * FUTURETODO: Update for new devices
 	 */
+	private SparseArray<String> sparseArrayMP3kbps;
 	private SparseArray<String> sparseArrayAudioSources;
 	private SparseArray<String> sparseArraySampleRatesHz;
 	private SparseArray<String> sparseArrayChannelTypes;
 	private SparseArray<String> sparseArrayEncodingFormats;
+	private SparseArray<String> sparseArraySensorsDelay;
 	
+	private LinkedList<Integer> listValidMP3kbps = new LinkedList<Integer>();
+	private LinkedList<Integer> listValidAudioSources = new LinkedList<Integer>();
+	private LinkedList<Integer> listValidSampleRatesHz = new LinkedList<Integer>();
+	private LinkedList<Integer> listValidChannelTypes = new LinkedList<Integer>();
+	private LinkedList<Integer> listValidEncodingFormats = new LinkedList<Integer>();
+	private LinkedList<Integer> listValidSensorsDelay = new LinkedList<Integer>();
+	
+	private String[] validMP3kbps;
 	private String[] validAudioSources;
 	private String[] validSampleRatesHz;
 	private String[] validChannelTypes;
 	private String[] validEncodingFormats;
+	private String[] validSensorsDelay;
 	
+	private int mp3kbps = -1;
 	private int audioSource = -1;
 	private int sampleRateHz = -1;
 	private int channelType = -1;
 	private int encodingFormat = -1;
+	private int sensorsDelay = -1;
 	
+	Spinner spinnerMP3kbps;
 	Spinner spinnerAudioSources;
 	Spinner spinnerSampleRatesHz;
 	Spinner spinnerChannelTypes;
 	Spinner spinnerEncodingFormats;
+	Spinner spinnerSensorsDelay;
 	
+	ArrayAdapter<String> arrayAdapterMP3kbps;
 	ArrayAdapter<String> arrayAdapterAudioSources;
 	ArrayAdapter<String> arrayAdapterSampleRatesHz;
 	ArrayAdapter<String> arrayAdapterChannelTypes;
 	ArrayAdapter<String> arrayAdapterEncodingFormats;
+	ArrayAdapter<String> arrayAdapterSensorsDelay;
 	
 	/**
 	 * 
@@ -61,9 +79,22 @@ public class SpinnerManager {
 		this.validAudioRecordSettings = DeviceUtils.getValidAudioRecordSettings();
 	}
 	
-	public void createSpinners(View sAudioSources, View sSampleRatesHz, View sChanelTypes, View sEncodingFormats) {
+	public void createSpinners(
+			View sMP3kbps, 
+			View sAudioSources, 
+			View sSampleRatesHz, 
+			View sChanelTypes, 
+			View sEncodingFormats,
+			View sSensorsDelay) {
 		
 		loadValidSettings(true, true, true);
+		
+		spinnerMP3kbps = (Spinner) sMP3kbps;
+		arrayAdapterMP3kbps = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, validMP3kbps);
+		arrayAdapterMP3kbps.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		spinnerMP3kbps.setAdapter(arrayAdapterMP3kbps);
+		spinnerMP3kbps.setSelection(0);
+		spinnerMP3kbps.setOnItemSelectedListener(onItemSelectedListenerMP3kbps());
 		
 		spinnerAudioSources = (Spinner) sAudioSources;
 		arrayAdapterAudioSources = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, validAudioSources);
@@ -93,11 +124,22 @@ public class SpinnerManager {
 		spinnerEncodingFormats.setSelection(0);
 //		spinnerEncodingFormats.setOnItemSelectedListener(listener);
 		
+		spinnerSensorsDelay = (Spinner) sSensorsDelay;
+		arrayAdapterSensorsDelay = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, validSensorsDelay);
+		arrayAdapterSensorsDelay.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		spinnerSensorsDelay.setAdapter(arrayAdapterSensorsDelay);
+		spinnerSensorsDelay.setSelection(0);
+//		spinnerSensorsDelay.setOnItemSelectedListener(listener);
+		
 //		notifyChangesToView();
 	}
 	
 	public void notifyChangesToView() {
 		
+		if (arrayAdapterMP3kbps != null) {
+			
+			arrayAdapterMP3kbps.notifyDataSetChanged();
+		}
 		if (arrayAdapterAudioSources != null) {
 			
 			arrayAdapterAudioSources.notifyDataSetChanged();
@@ -114,6 +156,24 @@ public class SpinnerManager {
 			
 			arrayAdapterEncodingFormats.notifyDataSetChanged();
 		}
+		if (arrayAdapterSensorsDelay != null) {
+			
+			arrayAdapterSensorsDelay.notifyDataSetChanged();
+		}
+	}
+	
+	/**
+	 * Return the settings on the spinners
+	 * @return int[] : 	0 - mp3kbps,
+	 * 					1 - audioSource,
+	 * 					2 - sampleRateHz,
+	 * 					3 - channelType, 
+	 * 					4 - encodingFormat,
+	 * 					5 - sensorsDelay
+	 */
+	public int[] getSpinnerSettings() {
+		
+		return new int[]{mp3kbps, audioSource, sampleRateHz, channelType, encodingFormat, sensorsDelay};
 	}
 		
 	/**
@@ -128,29 +188,66 @@ public class SpinnerManager {
 									boolean reloadSampleRates, 
 									boolean reloadChannelTypes) {
 		
-		LinkedList<Integer> listValidAudioSources = new LinkedList<Integer>();
-		LinkedList<Integer> listValidSampleRatesHz = new LinkedList<Integer>();
-		LinkedList<Integer> listValidChannelTypes = new LinkedList<Integer>();
-		LinkedList<Integer> listValidEncodingFormats = new LinkedList<Integer>();
-		
 		if (reloadAll) {
 			
 			this.validAudioRecordSettings = DeviceUtils.getValidAudioRecordSettings();
+		
+			listValidMP3kbps = new LinkedList<Integer>();
+			listValidAudioSources = new LinkedList<Integer>();
+			listValidSampleRatesHz = new LinkedList<Integer>();
+			listValidChannelTypes = new LinkedList<Integer>();
+			listValidEncodingFormats = new LinkedList<Integer>();
+			listValidSensorsDelay = new LinkedList<Integer>();
+			
+			
+			mp3kbps = -1;
 			audioSource = -1;
 			sampleRateHz = -1;
 			channelType = -1;
 			encodingFormat = -1;
+			sensorsDelay = -1;
 		} else if (reloadSampleRates) {
+			
+			listValidSampleRatesHz = new LinkedList<Integer>();
+			listValidChannelTypes = new LinkedList<Integer>();
+			listValidEncodingFormats = new LinkedList<Integer>();
 			
 			sampleRateHz = -1;
 			channelType = -1;
 			encodingFormat = -1;
 		} else if (reloadChannelTypes) {
 			
+			listValidChannelTypes = new LinkedList<Integer>();
+			listValidEncodingFormats = new LinkedList<Integer>();
+			
 			channelType = -1;
 			encodingFormat = -1;
 		}
 
+		if (mp3kbps == -1) {
+			
+			String[] mp3kbpsArray = context.getResources().getStringArray(R.array.mp3kbps);
+			mp3kbps = Integer.parseInt(mp3kbpsArray[0]);
+
+			for (String mp3kbpsSetting : mp3kbpsArray) {
+				
+				listValidMP3kbps.add(Integer.parseInt(mp3kbpsSetting));
+			}
+		}
+		
+		if (sensorsDelay == -1) {
+			
+			String[] sensorsDelayArray = context.getResources().getStringArray(R.array.sensorsdelay);
+			if (sensorsDelayArray.length > 0) {
+				
+				sensorsDelay = 0;
+			}
+			for (int i = 0; i < sensorsDelayArray.length; i++) {
+				
+				listValidSensorsDelay.add(i);
+			}
+		}
+		
 		if (validAudioRecordSettings.size() > 0) {
 			
 			// set audio source
@@ -207,10 +304,7 @@ public class SpinnerManager {
 				}
 			}
 			
-			fillValidValuesWithNames(listValidAudioSources,  
-										listValidSampleRatesHz, 
-										listValidChannelTypes, 
-										listValidEncodingFormats);
+			fillValidValuesWithNames();
 		} else {
 			// TODO: set values to error and ask user to reload all?!
 		}
@@ -218,22 +312,28 @@ public class SpinnerManager {
 	
 	/**
 	 * Fill String arrays with the valid names to be presented on spinners based on the mapped values.
-	 * 
-	 * @param listValidAudioSources
-	 * @param listValidSampleRatesHz
-	 * @param listValidChannelTypes
-	 * @param listValidEncodingFormats
 	 */
-	private void fillValidValuesWithNames(LinkedList<Integer> listValidAudioSources, 
-											LinkedList<Integer> listValidSampleRatesHz,
-											LinkedList<Integer> listValidChannelTypes, 
-											LinkedList<Integer> listValidEncodingFormats) {
+	private void fillValidValuesWithNames() {
 		
-		if (sparseArrayAudioSources == null || sparseArraySampleRatesHz == null || sparseArrayChannelTypes == null || sparseArrayEncodingFormats == null) {
+		if (sparseArrayMP3kbps == null || 
+				sparseArrayAudioSources == null || 
+				sparseArraySampleRatesHz == null || 
+				sparseArrayChannelTypes == null || 
+				sparseArrayEncodingFormats == null ||
+				sparseArraySensorsDelay == null) {
 			
 			loadAndMapResourcesNames();
 		}
 		
+		// fill mp3kbps
+		if (listValidMP3kbps.size() > 0) {
+			
+			validMP3kbps = new String[listValidMP3kbps.size()];
+			for (int i = 0; i < listValidMP3kbps.size(); i++) {
+				
+				validMP3kbps[i] = sparseArrayMP3kbps.get(listValidMP3kbps.get(i));
+			}
+		}
 		// fill audio sources
 		if (listValidAudioSources.size() > 0) {
 			
@@ -273,24 +373,44 @@ public class SpinnerManager {
 				}
 			}
 		}
+		// fill sensors delay
+		if (listValidSensorsDelay.size() > 0) {
+			
+			validSensorsDelay = new String[listValidSensorsDelay.size()];
+			for (int i = 0; i < listValidSensorsDelay.size(); i++) {
+				
+				validSensorsDelay[i] = sparseArraySensorsDelay.get(listValidSensorsDelay.get(i));
+			}
+		}
 	}
 	
 	/**
-	 * Load the possible string values to be used with the spinners and map to corresponding integer.
+	 * Load the possible string values from resources 
+	 * to be used with the spinners and map to corresponding integer.
+	 * Normally following the API INTEGER identification when possible. 
 	 */
 	private void loadAndMapResourcesNames() {
 		
+		sparseArrayMP3kbps = new SparseArray<String>();
 		sparseArrayAudioSources = new SparseArray<String>();
 		sparseArraySampleRatesHz = new SparseArray<String>();
 		sparseArrayChannelTypes = new SparseArray<String>();
 		sparseArrayEncodingFormats = new SparseArray<String>();
+		sparseArraySensorsDelay = new SparseArray<String>();
 		
+		String[] mp3kbpsArray = context.getResources().getStringArray(R.array.mp3kbps);
 		String[] audioSourcesArray = context.getResources().getStringArray(R.array.audiosources);
 		String[] sampleRatesHzArray = context.getResources().getStringArray(R.array.samplerateshz);
 		String[] channelsTypesArray = context.getResources().getStringArray(R.array.channeltypes);
 		String[] encodingFormatsArray = context.getResources().getStringArray(R.array.encodingformats);
+		String[] sensorsDelayArray = context.getResources().getStringArray(R.array.sensorsdelay);
 		
-		for(int i = 0; i < audioSourcesArray.length; i++) {
+		for (int i = 0; i < mp3kbpsArray.length; i++) {
+			
+			// this one differ because these values are not defined by Android API
+			sparseArrayMP3kbps.put(Integer.parseInt(mp3kbpsArray[i]), mp3kbpsArray[i]);
+		}
+		for (int i = 0; i < audioSourcesArray.length; i++) {
 			
 			sparseArrayAudioSources.put(i, audioSourcesArray[i]);
 		}		
@@ -308,5 +428,38 @@ public class SpinnerManager {
 			// 16Bit = 2, 8Bit = 3 at Android API
 			sparseArrayEncodingFormats.put(i+2, encodingFormatsArray[i]);
 		}
+		for (int i = 0; i < sensorsDelayArray.length; i++) {
+			
+			sparseArraySensorsDelay.put(i, sensorsDelayArray[i]);
+		}
 	}
+	
+	/**
+	 * MP3 kbps listener for item selected. Update the setting.
+	 * @return listener
+	 */
+	private AdapterView.OnItemSelectedListener onItemSelectedListenerMP3kbps() {
+		
+		return new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int pos, long id) {
+				
+				mp3kbps = listValidMP3kbps.get(pos);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+			}
+		};
+	}
+	
+	
+	
+	
+	
+	
+	
 }

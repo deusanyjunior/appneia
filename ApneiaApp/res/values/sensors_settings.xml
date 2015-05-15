@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sensorsdelay">
+        <item>Fastest</item>
+        <item>Game</item>
+        <item>User interface</item>
+        <item>Normal</item>
+    </string-array>
+    
+</resources>

@@ -51,7 +51,8 @@
         </activity>
         <activity
             android:name=".newrecord.MonitoringActivity"
-            android:label="@string/title_activity_new_record_monitoring" >
+            android:label="@string/title_activity_new_record_monitoring"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="br.usp.appneia.newrecord.AfterSleepFormActivity"

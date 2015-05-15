@@ -123,7 +123,7 @@ public class AfterSleepFormActivity extends Activity {
 		//TODO: unsafe conversions!
 		try {
 			 
-			String fileNameRecordDetails = getResources().getString(R.string.file_record_details);
+			String fileNameRecordAnswers = getResources().getString(R.string.file_record_answers);
 			String answer1 = ((RadioButton) activity.findViewById(firstAnswer)).getText().toString();
 			String answer2 = ((RadioButton) activity.findViewById(secondAnswer)).getText().toString();
 			String answer3 = ((RadioButton) activity.findViewById(thirdAnswer)).getText().toString();
@@ -138,7 +138,7 @@ public class AfterSleepFormActivity extends Activity {
 			answers.append(" ");
 			answers.append(answer3);
 			answers.append("\n");
-			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordDetails, answers.toString());
+			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordAnswers, answers.toString());
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			return false;

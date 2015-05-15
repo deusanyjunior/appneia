@@ -12,15 +12,15 @@
     </string-array>
     
     <string-array name="audiosources"> <!-- MediaRecorder.AudioSource -->
-        <item>Default</item>
-        <item>Mic</item>
-        <item>Voice uplink</item>
-        <item>Voice downlink</item>
-        <item>Voice call</item>
-        <item>Camera Mic</item> <!-- CAMCODER -->
-        <item>Voice recognition</item>
-        <item>Voice communication</item>
-        <item>Remote submix</item>
+        <item>Padrão</item>
+        <item>Microfone</item>
+        <item>Transmissão de voz (Tx)</item>
+        <item>Recepção de voz (Rx)</item>
+        <item>Áudio durante ligação</item>
+        <item>Mic da câmera</item> <!-- CAMCODER -->
+        <item>Reconhecimento de voz</item>
+        <item>Mic para comunicação (VoIP)</item>
+        <item>Áudio de submix remoto</item>
     </string-array>
     
     <string-array name="samplerateshz">
@@ -40,9 +40,9 @@
     </string-array>
     
     <string-array name="channeltypes"> <!-- AudioFormat -->
-        <item>Default</item> <!-- AudioFormat.CHANNEL_IN_DEFAULT -->
+        <item>Padrão</item> <!-- AudioFormat.CHANNEL_IN_DEFAULT -->
         <item>Mono</item> <!-- AudioFormat.CHANNEL_IN_MONO -->
-        <item>Stereo</item> <!-- AudioFormat.CHANNEL_IN_STEREO -->
+        <item>Estéreo</item> <!-- AudioFormat.CHANNEL_IN_STEREO -->
     </string-array>
 
     <string-array name="bitrates">

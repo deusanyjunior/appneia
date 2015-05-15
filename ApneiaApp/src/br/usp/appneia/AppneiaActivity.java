@@ -4,10 +4,12 @@
 package br.usp.appneia;
 
 import br.usp.appneia.newrecord.BeforeSleepFormActivity;
+import br.usp.appneia.settings.DeviceUtils;
 import br.usp.appneia.settings.SettingsActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,11 +22,14 @@ public class AppneiaActivity extends Activity {
 
 	Context context = this;
 	
+	SharedPreferences sharedPreferences;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appneia);
 		
+		DeviceUtils.loadPreferences(context);
 		setupButtons();
 	}
 	
@@ -33,8 +38,9 @@ public class AppneiaActivity extends Activity {
 		
 		//TODO: ask user or
 		finish(); // 'him!
+		super.onBackPressed();
 	}
-	
+		
 	/**
 	 * Configure the actions for each button
 	 */

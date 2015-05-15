@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import br.usp.appneia.AppneiaActivity;
 import br.usp.appneia.R;
 import br.usp.appneia.settings.DeviceUtils;
 import android.app.Activity;
@@ -42,10 +43,6 @@ public class BeforeSleepFormActivity extends Activity {
 		// folder name is based on date and time
 		String recordFolder = new SimpleDateFormat("yyMMdd-HHmmss", Locale.US).format(new Date());
 		recordFolderPath = DeviceUtils.setupRecordFolder(context, recordFolder);
-		if (recordFolderPath != null) {
-			String fileNameRecordDetails = getResources().getString(R.string.file_record_details);
-			DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordDetails, DeviceUtils.getBuildInfo());
-		}
 		setupButtons();
 	}
 	
@@ -54,10 +51,26 @@ public class BeforeSleepFormActivity extends Activity {
 		
 		//TODO: ask user
 		try {
+			Intent intentSave = new Intent(context, AppneiaActivity.class);
+			startActivity(intentSave);
 			finalize();
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		super.onBackPressed();
+	}
+	
+	private boolean createRecorderFile() {
+		
+		if (recordFolderPath != null) {
+			
+			String fileNameRecordAnswers = getResources().getString(R.string.file_record_answers);
+			DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordAnswers, DeviceUtils.getBuildInfo());
+			return true;
+		} else {
+			
+			return false;
 		}
 	}
 	
@@ -129,10 +142,15 @@ public class BeforeSleepFormActivity extends Activity {
 	 */
 	private boolean saveAnswers() {
 		
+		if (!createRecorderFile()) {
+			
+			return false;
+		}
+		
 		//TODO: unsafe conversions!
 		try {
 			 
-			String fileNameRecordDetails = getResources().getString(R.string.file_record_details);
+			String fileNameRecordAnswers = getResources().getString(R.string.file_record_answers);
 			String answer1 = ((RadioButton) activity.findViewById(firstAnswer)).getText().toString();
 			String answer2 = ((RadioButton) activity.findViewById(secondAnswer)).getText().toString();
 			String answer3 = ((RadioButton) activity.findViewById(thirdAnswer)).getText().toString();
@@ -146,7 +164,7 @@ public class BeforeSleepFormActivity extends Activity {
 			answers.append(answer2);
 			answers.append(" ");
 			answers.append(answer3);
-			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordDetails, answers.toString());
+			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordAnswers, answers.toString());
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			return false;

@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import br.usp.appneia.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -37,6 +39,17 @@ public class DeviceUtils {
 	 */
 	private static LinkedList<int[]> validAudioRecordingSettings;
 		
+	public static final String SETTINGS_PREFERENCES_NAME = "settingsPreferences";
+	
+	private static final String recordingFormatPreference_name = "recordingFormat";
+	private static final String mp3kbpsPreference_name = "mp3kbps";
+	private static final String audioSourcePreference_name = "audioSource";
+	private static final String sampleRateHzPreference_name = "sampleRateHz";
+	private static final String channelTypePreference_name = "channelType";
+	private static final String encodingFormatPreference_name = "encodingFormat";
+	private static final String sensorsPreferences_name = "sensors";
+	private static final String sensorsDelayPreference_name = "sensorsSampleRate";
+	
 	/**
 	 * Returns the storage directory used to save files.
 	 * 
@@ -148,7 +161,7 @@ public class DeviceUtils {
 			
 			for (Integer statusId : tempStatus) {
 				//TODO: what can we do if the application crashes or finishes?!
-				Toast.makeText(mContext, statusId, Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, statusId, Toast.LENGTH_LONG).show();
 			}
 		}
 	}
@@ -486,20 +499,131 @@ public class DeviceUtils {
 	 * 
 	 * @return LinkedList<int[]> with new valid settings
 	 */
-	@SuppressWarnings("unchecked")
 	public static LinkedList<int[]> getNewValidAudioRecordSettings() {
 		
-		LinkedList<int[]> validSettings;
+		validAudioRecordingSettings = null;
 		
-		verifyValidAudioRecordSettings();
-		
-		try {
-			validSettings = (LinkedList<int[]>) validAudioRecordingSettings.clone();			
-		} catch (ClassCastException e) {
-			
-			validSettings = new LinkedList<int[]>();
-			e.printStackTrace();
-		}
-		return validSettings;
+		return getValidAudioRecordSettings();
 	}
+	
+	/**
+	 * Verify the if the preferences are already set, and load defaults otherwise
+	 * @param context
+	 * @return true if the preferences have been loaded successfully
+	 */
+	public static boolean loadPreferences(Context context) {
+		
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
+		
+		// Load default preferences
+		if (sharedPreferences.getAll().size() == 0) {
+			
+			SharedPreferences.Editor editorSharedPreferences = 
+					sharedPreferences.edit();
+			
+			editorSharedPreferences.putInt(recordingFormatPreference_name, 0); // 0 = MP3, 1 = WAVE, 2 = 3GP
+			editorSharedPreferences.putInt(mp3kbpsPreference_name, 32); // 32, 64, 96, 128, 160, 256, 320
+			
+			editorSharedPreferences.putInt(audioSourcePreference_name, MediaRecorder.AudioSource.DEFAULT);
+			editorSharedPreferences.putInt(sampleRateHzPreference_name, 8000);
+			editorSharedPreferences.putInt(channelTypePreference_name, AudioFormat.CHANNEL_IN_DEFAULT);
+			editorSharedPreferences.putInt(encodingFormatPreference_name, AudioFormat.ENCODING_DEFAULT);
+			
+			editorSharedPreferences.putInt(sensorsDelayPreference_name, SensorManager.SENSOR_DELAY_NORMAL);
+			editorSharedPreferences.putInt(sensorsPreferences_name, 0); // -1 = ALL, decimal value converted from a reverse binary representation of the sensors to load, 0 = none 
+			
+			if (!editorSharedPreferences.commit()) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Update the preferences
+	 * 
+	 * @param context
+	 * @param recordingFormat   0 = MP3, 1 = WAVE, 2 = 3GP
+	 * @param mp3kbps           32, 64, 96, 128, 160, 256, 320
+	 * @param audioSource
+	 * @param sampleRateHz      8000, 11025, 16000, 22015, 44100 , 48000 , 88200 , 96000
+	 * @param channelType
+	 * @param encodingFormat
+	 * @param sensorsDelay      0 = fastest, 1 = game, 2 = ui, 3 = normal
+	 * @param sensors           -1 = ALL, decimal value converted from a reverse binary representation of the sensors to load, 0 = none
+	 * 
+	 * @return true if the preferences have been saves successfully
+	 */
+	public static boolean updatePreferences(Context context,
+			int recordingFormat, int mp3kbps, 
+			int audioSource, int sampleRateHz, int channelType, int encodingFormat, 
+			int sensorsDelay, int sensors) {
+	
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
+		
+		SharedPreferences.Editor editorSharedPreferences = 
+				sharedPreferences.edit();
+		
+		editorSharedPreferences.putInt(recordingFormatPreference_name, recordingFormat);
+		editorSharedPreferences.putInt(mp3kbpsPreference_name, mp3kbps);
+		
+		editorSharedPreferences.putInt(audioSourcePreference_name, audioSource);
+		editorSharedPreferences.putInt(sampleRateHzPreference_name, sampleRateHz);
+		editorSharedPreferences.putInt(channelTypePreference_name, channelType);
+		editorSharedPreferences.putInt(encodingFormatPreference_name, encodingFormat);
+		
+		editorSharedPreferences.putInt(sensorsDelayPreference_name, sensorsDelay);
+		editorSharedPreferences.putInt(sensorsPreferences_name, sensors);  
+		
+		if (!editorSharedPreferences.commit()) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Return the preferences following some definitions:
+	 * 
+	 * <ul>
+	 *  <li> recordingFormat : 0 = MP3, 1 = WAVE, 2 = 3GP </li>  
+	 *  <li> mp3kbps : 32, 64, 96, 128, 160, 256, 320 </li>
+	 *  <li> sensorsDelay : 0 = fastest, 1 = game, 2 = ui, 3 = normal </li>
+	 *  <li> sensors : -1 = ALL, decimal value converted from a reverse binary representation of the sensors to load, 0 = none </li>
+	 * </ul>
+	 * 
+	 * @param context
+	 * @return int[] :  0 - recordingFormat,  
+	 * 					1 - mp3kbps,
+	 * 					2 - audioSource, 
+	 * 					3 - sampleRateHz, 
+	 * 					4 - channelType, 
+	 * 					5 - encodingFormat,
+	 * 					6 - sensorsDelay,
+	 * 					7 - sensors 
+	 */
+	public static int[] getSharedPreferences(Context context) {
+	
+		int[] preferences = new int[8];
+		
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
+		
+		preferences[0] = sharedPreferences.getInt(recordingFormatPreference_name, 0);
+		preferences[1] = sharedPreferences.getInt(mp3kbpsPreference_name, 32); 
+		
+		preferences[2] = sharedPreferences.getInt(audioSourcePreference_name, MediaRecorder.AudioSource.DEFAULT);
+		preferences[3] = sharedPreferences.getInt(sampleRateHzPreference_name, 8000);
+		preferences[4] = sharedPreferences.getInt(channelTypePreference_name, AudioFormat.CHANNEL_IN_DEFAULT);
+		preferences[5] = sharedPreferences.getInt(encodingFormatPreference_name, AudioFormat.ENCODING_DEFAULT);
+		
+		preferences[6] = sharedPreferences.getInt(sensorsDelayPreference_name, SensorManager.SENSOR_DELAY_NORMAL);
+		preferences[7] = sharedPreferences.getInt(sensorsPreferences_name, 0); 
+		
+		return preferences;
+	}
+	
 }

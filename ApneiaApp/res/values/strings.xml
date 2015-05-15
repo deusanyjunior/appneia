@@ -2,6 +2,15 @@
 <resources>
 
     <string name="app_name">Appneia</string>
+    <string name="file_record_answers">record_answers.txt</string>
+    <string name="file_record_sensors">record_sensors.txt</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="loading">Loading..</string>
+    <string name="error_form">Sorry, you need to answer all questions.</string>
+    <string name="error_saving">Sorry, we are having problems to save data in your device.</string>
     <string name="new_record">New record</string>
     <string name="stored_records">Stored records</string>
     <string name="settings">Settings</string>
@@ -10,14 +19,7 @@
     <string name="title_activity_new_record_after_sleep_form">Appneia New Record After Sleep Form</string>
     <string name="title_activity_stored_records">Appneia Stored Records</string>
     <string name="title_activity_settings">Appneia Settings</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="back">Back</string>
-    <string name="save">Save</string>
-    <string name="loading">Loading..</string>
-    <string name="error_form">Sorry, you need to answer all questions.</string>
-    <string name="error_saving">Sorry, we are having problems to save the answers.</string>
-    <string name="file_record_details">record_details.txt</string>
+    <string name="error_loading_preferences">Sorry, we are having problems to load preferences.</string>
     <string name="before_sleep_form">Before sleep form</string>
     <string name="before_sleep_first_question">Did you sleep well?</string>
     <string name="before_sleep_second_question">Have you taken any medication today?</string>
@@ -43,9 +45,9 @@
     <string name="settings_audio_channels">Number of input channels</string>
     <string name="settings_mp3_kbps">MP3 kbps</string>
     <string name="settings_pcm_encoding">PCM encoding</string>
+    <string name="settings_sensors_delay">Sensors sample rate</string>
     <string name="settings_sensors">Sensors</string>
-    <string name="settings_sensor_checkbox_example">Sensor 1</string>
-    <string name="settings_sensors_sample_rate">Sensors sample rate</string>
+    <string name="settings_sensor_checkbox_all">All sensors</string>
     <string name="stored_records_list">List</string>
         
 </resources>

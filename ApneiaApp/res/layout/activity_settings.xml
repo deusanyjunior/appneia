@@ -76,7 +76,14 @@
                     android:id="@+id/radioSettingsWAVE"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_wave" />
+                    android:text="@string/settings_wave"
+                    android:enabled="false" />
+                <RadioButton
+                    android:id="@+id/radioSettings3GP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_3gp"
+                    android:enabled="false" />
             </RadioGroup>
             
             <TextView
@@ -140,6 +147,18 @@
                 android:layout_height="wrap_content" />
             
             <TextView
+                android:id="@+id/textViewSettingsSensorsDelay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_sensors_delay"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spinnerSettingsSensorsDelay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            
+            <TextView
                 android:id="@+id/textViewSettingsSensors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,22 +166,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
-                android:id="@+id/checkBoxSettingsSensorCheckBoxExample"
+                android:id="@+id/checkBoxSettingsSensorAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_sensor_checkbox_example" />
+                android:text="@string/settings_sensor_checkbox_all" />
 
-            <TextView
-                android:id="@+id/textViewSettingsSensorsSampleRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_sensors_sample_rate"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <Spinner
-                android:id="@+id/spinnerSettingsSensorSampleRate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
