@@ -7,16 +7,23 @@ import java.io.IOException;
 
 import com.buihha.audiorecorder.Mp3Recorder;
 
+import br.usp.appneia.AppneiaActivity;
 import br.usp.appneia.R;
-import br.usp.appneia.settings.DeviceUtils;
 import br.usp.sensorrecorder.SensorRecorder;
+import br.usp.utils.DeviceUtils;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.media.AudioFormat;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 
@@ -43,24 +50,35 @@ public class MonitoringActivity extends Activity implements SensorEventListener 
 
 			recordFolderPath = getIntent().getExtras().getString("recordFolderPath");		
 			setupButtons();
-			int[] p = DeviceUtils.getSharedPreferences(context);
 			
-			if (p[0] == 0) { // 0 = MP3
-				
+			// load audio preferences
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    		String audioRecordingFormat = sharedPreferences.getString(DeviceUtils.PREF_AUDIO_RECORDING_FORMAT, "MP3");
+    		int audioMP3kbps = Integer.parseInt(sharedPreferences.getString(DeviceUtils.PREF_AUDIO_MP3_KBPS, "96"));
+    		int audioSource = Integer.parseInt(sharedPreferences.getString(DeviceUtils.PREF_AUDIO_SOURCE, 
+    				Integer.toString(MediaRecorder.AudioSource.DEFAULT)));
+    		int audioSampleRate = Integer.parseInt(sharedPreferences.getString(DeviceUtils.PREF_AUDIO_SAMPLE_RATE, "44100"));
+    		int audioChannels = Integer.parseInt(sharedPreferences.getString(DeviceUtils.PREF_AUDIO_CHANNELS, 
+    				Integer.toString(AudioFormat.CHANNEL_IN_MONO)));
+    		int audioEncoding = Integer.parseInt(sharedPreferences.getString(DeviceUtils.PREF_AUDIO_ENCODING, 
+    				Integer.toString(AudioFormat.ENCODING_PCM_16BIT)));
+    		
+    		if( audioRecordingFormat.equals("MP3")) {
 				try {
 					
-					mp3Recorder = new Mp3Recorder(recordFolderPath, p[1], p[2], p[3], p[4], p[5]);
+					mp3Recorder = new Mp3Recorder(recordFolderPath, audioMP3kbps, audioSource, audioSampleRate, audioChannels, audioEncoding);
 					mp3Recorder.startRecording();
 					created = true;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			if (p[7] != 0) {
-				
-				sensorRecorder = new SensorRecorder(context, recordFolderPath, p[6], p[7]);
-			}
+    			
+    		}
+    		// TODO: WAVE and 3GP
+    		
+    		sensorRecorder = new SensorRecorder(context, recordFolderPath);
+
 		}
 	}
 	
@@ -87,8 +105,26 @@ public class MonitoringActivity extends Activity implements SensorEventListener 
 	@Override
 	public void onBackPressed() {
 		
-		//TODO: ask user
+		new AlertDialog.Builder(this)
+        .setTitle(R.string.alert_finish_monitoring_title)
+        .setMessage(R.string.alert_finish_monitoring_message)
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
+        	@Override
+        	public void onClick(DialogInterface arg0, int arg1) {
+        		try {
+        		
+        			Intent intentSave = new Intent(context, AppneiaActivity.class);
+        			startActivity(intentSave);
+        			finalize();
+        		} catch (Throwable e) {
+        			e.printStackTrace();
+        		}
+        		MonitoringActivity.super.onBackPressed();
+            }
+
+        }).create().show();
 	}
 	
 	/**

@@ -3,28 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context="${relativePackage}.${activityClass}" 
+    android:background="@color/background_floating_material_dark">
 
     <TextView
         android:id="@+id/textViewNewRecordMonitoring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_record"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/textViewMonitoring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/monitoring"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"/>
 
     <ScrollView
         android:id="@+id/scrollViewMonitoring"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/background_light" >
+        android:background="@android:color/background_dark" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/monitoring_greeting"
                 android:layout_gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@android:color/white"/>
 
         </LinearLayout>
     </ScrollView>
@@ -48,6 +52,7 @@
         android:id="@+id/buttonMonitoringFinalizeMonitoring"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/monitoring_finalize_monitoring" />
+        android:text="@string/monitoring_finalize_monitoring" 
+        android:textColor="@android:color/white"/>
     
 </LinearLayout>

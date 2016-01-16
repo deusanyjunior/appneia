@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen 
+    android:title="@string/title_activity_preferences"
+    xmlns:android="http://schemas.android.com/apk/res/android" >  
+   
+   <ListPreference 
+       android:key="pref_audio_recording_format"
+       android:title="@string/preferences_audio_recording_format"
+       android:summary="@string/preferences_audio_recording_format_summary"
+       android:entries="@array/audioRecordingFormat"
+       android:entryValues="@array/audioRecordingFormat"
+       android:defaultValue="MP3"/>
+   
+   <ListPreference 
+       android:key="pref_audio_mp3_kbps"
+       android:title="@string/preferences_audio_mp3_kbps"
+       android:summary="@string/preferences_audio_mp3_kbps_summary"
+       android:entries="@array/audioMP3kbps"
+       android:entryValues="@array/audioMP3kbps"
+       android:defaultValue="96"/>
+   
+   <ListPreference 
+       android:key="pref_audio_source"
+       android:title="@string/preferences_audio_source"
+       android:summary="@string/preferences_audio_source_summary" 
+       android:entries="@array/audioSources"
+       android:entryValues="@array/audioSources_id"/>
+
+	<ListPreference 
+       android:key="pref_audio_sample_rate"
+       android:title="@string/preferences_audio_sample_rate"
+       android:summary="@string/preferences_audio_sample_rate_summary" 
+       android:entries="@array/audioSampleRates"
+       android:entryValues="@array/audioSampleRates"/>
+	
+	<ListPreference 
+       android:key="pref_audio_channels"
+       android:title="@string/preferences_audio_channels"
+       android:summary="@string/preferences_audio_channels_summary" 
+       android:entries="@array/audioChannels"
+       android:entryValues="@array/audioChannels_id"/>
+		
+  	<ListPreference 
+       android:key="pref_audio_encoding"
+       android:title="@string/preferences_audio_encoding"
+       android:summary="@string/preferences_audio_encoding_summary" 
+       android:entries="@array/audioEncoding"
+       android:entryValues="@array/audioEncoding_id"/>
+  	
+  	<ListPreference 
+       android:key="pref_sensor_sample_rate"
+       android:title="@string/preferences_sensor_sample_rate"
+       android:summary="@string/preferences_sensor_sample_rate" 
+       android:entries="@array/sensorSampleRate"
+       android:entryValues="@array/sensorSampleRate_id"
+       android:defaultValue="3"/>
+  	
+  	<PreferenceScreen 
+  	    android:key="pref_sensors"
+  	    android:title="@string/preferences_sensors"
+    	xmlns:android="http://schemas.android.com/apk/res/android" >
+  	    
+  	</PreferenceScreen>
+	
+</PreferenceScreen>

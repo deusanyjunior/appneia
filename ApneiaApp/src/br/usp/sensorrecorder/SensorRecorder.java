@@ -1,12 +1,19 @@
 package br.usp.sensorrecorder;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import br.usp.appneia.R;
-import br.usp.appneia.settings.DeviceUtils;
+import br.usp.utils.DeviceUtils;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.preference.PreferenceManager;
+import android.util.SparseBooleanArray;
 
 public class SensorRecorder {
 	
@@ -14,61 +21,118 @@ public class SensorRecorder {
 	
 	private SensorManager sensorManager;
 	private String recordFolderPath;
-	String filenameRecordSensors;
-	private int sensorsDelay = -1;
-	private int sensors = 0;
+	private LinkedList<Sensor> selectedSensors = new LinkedList<Sensor>();
+	private int sensorSampleRate;
 	
-	public SensorRecorder(Context context, String recordFolderPath, int sensorsDelay, int sensors) {
+	String filenameRecordSensors;
+	
+	public SensorRecorder(Context context, String recordFolderPath) {
 		
 		this.context = context;
 		this.recordFolderPath = recordFolderPath;
 		this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-		this.sensorsDelay = sensorsDelay;
-		this.sensors = sensors;
-		this.createRecorderFile();
 		
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
+		SparseBooleanArray sensorTypeList = new SparseBooleanArray();
+		for(Sensor sensor: sensorList) {
+			
+			if( sensorTypeList.get(sensor.getType(), false) == false) {
+		
+				boolean sensorMonitored = sharedPreferences.getBoolean("pref_sensor_"+sensor.getType(), false);
+				
+				if( sensorMonitored ) {
+		
+					selectedSensors.add(sensor);
+				}
+				sensorTypeList.append(sensor.getType(), true);
+			}
+		}
+		
+		this.sensorSampleRate = Integer.parseInt(sharedPreferences.getString(DeviceUtils.PREF_SENSOR_SAMPLE_RATE, "3"));
+		
+		this.createRecorderFile();
 	}
 	
 	public void onResume() {
-		
-		if (sensors == -1) {
 			
-			for (Sensor sensor : sensorManager.getSensorList(Sensor.TYPE_ALL)) {
-				
-				sensorManager.registerListener((SensorEventListener) context,
-						sensor,
-						sensorsDelay);
-			}
+		for (Sensor sensor : selectedSensors) {
+			
+			sensorManager.registerListener((SensorEventListener) context,
+					sensor,
+					sensorSampleRate);
 		}
 	}
 	
 	public void onStop() {
 		
-		if (sensors == -1) {
-			
-			for (Sensor sensor : sensorManager.getSensorList(Sensor.TYPE_ALL)) {
+		for (Sensor sensor : selectedSensors) {
 				
-				sensorManager.unregisterListener((SensorEventListener) context,
-						sensor);
-			}
+			sensorManager.unregisterListener((SensorEventListener) context,
+					sensor);
 		}
 	}
 	
+	@SuppressLint("NewApi")
 	private void createRecorderFile() {
 		if (recordFolderPath != null) {
 			filenameRecordSensors = context.getResources().getString(R.string.file_record_sensors);
 			DeviceUtils.writeDataOnFile(recordFolderPath, filenameRecordSensors, DeviceUtils.getBuildInfo());
+			
+			StringBuilder data = new StringBuilder();
+			data.append("\n");
+			data.append("Type, Name, MaximumRange, Power, Resolution, Vendor, Version");
+			if( DeviceUtils.getBuild() >= 9 ) {
+				
+				data.append(", MinDelay");
+			}
+			if( DeviceUtils.getBuild() >=21 ) {
+				
+				data.append(", MaxDelay");
+			}
+			data.append("\n");
+			DeviceUtils.writeDataOnFile(recordFolderPath, filenameRecordSensors, data.toString());
+			
+			for(Sensor sensor : selectedSensors) {
+				data = new StringBuilder();
+				data.append(sensor.getType());
+				data.append(", ");
+				data.append(sensor.getName());
+				data.append(", ");
+				data.append(sensor.getMaximumRange());
+				data.append(", ");
+				data.append(sensor.getPower());
+				data.append(", ");
+				data.append(sensor.getResolution());
+				data.append(", ");
+				data.append(sensor.getVendor());
+				data.append(", ");
+				data.append(sensor.getVersion());
+				if( DeviceUtils.getBuild() >= 9 ) {
+
+					data.append(", ");
+					data.append(sensor.getMinDelay());
+				}
+				if( DeviceUtils.getBuild() >=21 ) {
+					
+					data.append(", ");
+					data.append(sensor.getMaxDelay());
+				}
+				data.append("\n");
+				DeviceUtils.writeDataOnFile(recordFolderPath, filenameRecordSensors, data.toString());			
+			}
+			
 			DeviceUtils.writeDataOnFile(recordFolderPath, filenameRecordSensors, "\n");
 		}
 	}
 	
 	public void saveEvent(SensorEvent event) {
 		
-		//TODO: create a buffer ring and write only after some seconds
+		//TODO: create a ring buffer and write only after some seconds
 		StringBuilder data = new StringBuilder();
 		data.append(event.timestamp);
 		data.append(' ');
-		data.append(event.sensor.getName());
+		data.append(event.sensor.getType());
 		data.append(' ');
 		for (float eventData: event.values) {
 			
@@ -76,7 +140,6 @@ public class SensorRecorder {
 			data.append(' ');
 		}
 		data.append("\n");
-		DeviceUtils.writeDataOnFile(recordFolderPath, filenameRecordSensors, data.toString());		
-	
+		DeviceUtils.writeDataOnFile(recordFolderPath, filenameRecordSensors, data.toString());
 	}
 }

@@ -5,4 +5,4 @@
  * @author dj
  *
  */
-package br.usp.appneia.settings;
+package br.usp.appneia.preferences;

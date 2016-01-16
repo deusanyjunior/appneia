@@ -1,19 +1,15 @@
-package br.usp.appneia.settings;
+package br.usp.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-
 import br.usp.appneia.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -32,23 +28,41 @@ public class DeviceUtils {
 	/*
 	 * List of last storage status 
 	 */
-	private static ArrayList<Integer> storageStatus;
+	private static LinkedList<Integer> storageStatus;
 	
 	/*
 	 * List of valid audio recording settings
 	 */
 	private static LinkedList<int[]> validAudioRecordingSettings;
-		
-	public static final String SETTINGS_PREFERENCES_NAME = "settingsPreferences";
+			
+	// These values are presented as keys at preferences.xml
+	public static final String PREF_AUDIO_RECORDING_FORMAT = "pref_audio_recording_format";
+	public static final String PREF_AUDIO_MP3_KBPS = "pref_audio_mp3_kbps";
+	public static final String PREF_AUDIO_SOURCE = "pref_audio_source";
+	public static final String PREF_AUDIO_SAMPLE_RATE = "pref_audio_sample_rate";
+	public static final String PREF_AUDIO_CHANNELS = "pref_audio_channels";
+	public static final String PREF_AUDIO_ENCODING = "pref_audio_encoding";
+	public static final String PREF_SENSOR_SAMPLE_RATE = "pref_sensor_sample_rate";
 	
-	private static final String recordingFormatPreference_name = "recordingFormat";
-	private static final String mp3kbpsPreference_name = "mp3kbps";
-	private static final String audioSourcePreference_name = "audioSource";
-	private static final String sampleRateHzPreference_name = "sampleRateHz";
-	private static final String channelTypePreference_name = "channelType";
-	private static final String encodingFormatPreference_name = "encodingFormat";
-	private static final String sensorsPreferences_name = "sensors";
-	private static final String sensorsDelayPreference_name = "sensorsSampleRate";
+	/**
+	 * Get the build version
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public static int getBuild() {
+		
+		int build = 0;
+		try {
+			if (Integer.parseInt(android.os.Build.VERSION.SDK) < android.os.Build.VERSION_CODES.DONUT) {
+				build = Integer.parseInt(android.os.Build.VERSION.SDK);
+			} else {
+				build = android.os.Build.VERSION.SDK_INT;
+			}
+		} catch (Exception e) {
+			build = android.os.Build.VERSION.SDK_INT;
+		}
+		return build;
+	}
 	
 	/**
 	 * Returns the storage directory used to save files.
@@ -72,18 +86,7 @@ public class DeviceUtils {
 		
 		long freeSpace = 0;
 		File externalStorageDir = null;
-		int build = 0;
-		
-		try {
-			if (Integer.parseInt(android.os.Build.VERSION.SDK) < android.os.Build.VERSION_CODES.DONUT) {
-				build = Integer.parseInt(android.os.Build.VERSION.SDK);
-			} else {
-				build = android.os.Build.VERSION.SDK_INT;
-			}
-		} catch (NumberFormatException e) {
-			build = 0;
-		}
-		
+		int build = getBuild();		
 		if (build < 9) {
 			
 			externalStorageDir = Environment.getExternalStorageDirectory();
@@ -98,7 +101,6 @@ public class DeviceUtils {
 		
 		return freeSpace;
 	}
-	
 		
 	/**
 	 * Verify storage status and add the last status to a list in order to be retrieved afterward.
@@ -116,7 +118,7 @@ public class DeviceUtils {
 	    String auxSDCardStatus = Environment.getExternalStorageState();
 		
 		if (storageStatus == null) {
-			storageStatus = new ArrayList<Integer>();
+			storageStatus = new LinkedList<Integer>();
 		}
 
 	    if ( auxSDCardStatus.equals(Environment.MEDIA_MOUNTED) ) {
@@ -152,12 +154,12 @@ public class DeviceUtils {
 	 */
 	public static void toastAllStorageStatus(Context mContext) {
 		
-		ArrayList<Integer> tempStatus = new ArrayList<Integer>();
+		LinkedList<Integer> tempStatus = new LinkedList<Integer>();
 		
 		if (storageStatus != null) {
 			
 			tempStatus.addAll(storageStatus);
-			storageStatus = new ArrayList<Integer>();
+			storageStatus = new LinkedList<Integer>();
 			
 			for (Integer statusId : tempStatus) {
 				//TODO: what can we do if the application crashes or finishes?!
@@ -241,8 +243,6 @@ public class DeviceUtils {
 		return info.toString();
 	}
 	
-	
-
 	/**
 	 * Set the record folder based on the name
 	 * @return a full path if the folder has been created successfully, or null otherwise.
@@ -316,8 +316,6 @@ public class DeviceUtils {
 		return true;
 	}
 	
-	
-	
 	/**
 	 * Verify possible settings of input audio for recording.
 	 * The valid settings follow this order: 	
@@ -349,41 +347,50 @@ public class DeviceUtils {
 				MediaRecorder.AudioSource.VOICE_RECOGNITION,
 				MediaRecorder.AudioSource.VOICE_COMMUNICATION,
 				MediaRecorder.AudioSource.REMOTE_SUBMIX};
-		int sampleRatesHz[] = { 8000, 11025, 16000, 22015, 44100 , 48000 , 88200 , 96000 };
-		int channelTypes[] = { AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO };
-		int encodingFormats[] = {AudioFormat.ENCODING_PCM_16BIT, AudioFormat.ENCODING_PCM_8BIT}; // 16Bit = 2, 8Bit = 3 on Android API
-
-		short bitRates[] = { 16, 8 };
-		short numbersOfChannels[] = { 1, 2 };
+		
+		int audioSampleRates[] = { 8000, 11025, 16000, 22015, 44100 , 48000 , 88200 , 96000 };
+		
+		int audioChannels[] = { AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO };
+		 
+		// 16Bit = 2, 8Bit = 3, 32Bit Float = 4 on Android API
+		int audioEncoding[] = { AudioFormat.ENCODING_PCM_16BIT, AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_FLOAT};
 		
 		// Audio source settings to be verified
 		int mAudioSource;
-		int mSampleRateHz;
-		short mNumberOfChannels;
-		int mEncodingFormat;
-		short mBitRate;
+		int mSampleRate;
+		int mChannels;
+		int mEncoding;
+		
+		int[] channelQuantities = {1, 1, 2}; //CHANNEL_IN_DEFAULT may be MONO in most devices because this the guaranteed option
+		int[] encodingBitRate = {16, 8, 32};
+		
+		int mChannelsQuantity; // rename to numberOfChannels
+		int mBitRate;
 		int mFrameRate;
 		int mBufferSize;
 
 		for(int aS = 0; aS < audioSources.length; aS++) {
 			
-			for(int sR = 0; sR < sampleRatesHz.length; sR++) {
+			for(int aSR = 0; aSR < audioSampleRates.length; aSR++) {
 				
-				for(int nC = 0; nC < numbersOfChannels.length; nC++) {
+				for(int aC = 0; aC < audioChannels.length; aC++) {
 					
-					for(int bR = 0; bR < bitRates.length; bR++) {
+					for(int aE = 0; aE < audioEncoding.length; aE++) {
 						
 						mAudioSource = audioSources[aS];
-						mSampleRateHz = sampleRatesHz[sR];
-						mNumberOfChannels = numbersOfChannels[nC];
-						mEncodingFormat = encodingFormats[bR];
-						mBitRate = bitRates[bR];
+						mSampleRate = audioSampleRates[aSR];
+						mChannels = audioChannels[aC];
+						mEncoding = audioEncoding[aE];
 						
-						mFrameRate = mSampleRateHz * TIME_INTERVAL / 1000;
-						mBufferSize = mFrameRate * 2 * mBitRate * mNumberOfChannels / 8;
+						mChannelsQuantity = channelQuantities[aC];
+						mBitRate = encodingBitRate[aE];
+						mFrameRate = mSampleRate * TIME_INTERVAL / 1000; // depending on the time defined to save samples in ms
+						mBufferSize = mFrameRate * 2 * mBitRate * mChannelsQuantity / 8; // size in bytes
+						
+						Log.i(DeviceUtils.class.getName(), "Testing: "+mAudioSource+" "+mSampleRate+" "+mChannels+" "+mEncoding+" "+mChannelsQuantity+" "+mBitRate+" "+mFrameRate+" "+mBufferSize);
 						
 						// Verify if the buffer size has a bad value
-						if ( AudioRecord.getMinBufferSize(mSampleRateHz, channelTypes[mNumberOfChannels], mEncodingFormat) 
+						if ( AudioRecord.getMinBufferSize(mSampleRate, mChannels, mEncoding) 
 								== AudioRecord.ERROR_BAD_VALUE ) {
 							
 //							Log.e(DeviceUtils.class.getName(), "Audio Record buffer size has bad value");
@@ -394,15 +401,14 @@ public class DeviceUtils {
 						}
 						
 						// Verify if the buffer is lower than the minimum allowed
-						if (mBufferSize < AudioRecord.getMinBufferSize(mSampleRateHz, 
-								channelTypes[mNumberOfChannels], mEncodingFormat))	{ 
+						if (mBufferSize < AudioRecord.getMinBufferSize(mSampleRate, mChannels, mEncoding))	{ 
 							
 							// change the value in this case
-							mBufferSize = AudioRecord.getMinBufferSize(mSampleRateHz, channelTypes[mNumberOfChannels], mEncodingFormat);
+							mBufferSize = AudioRecord.getMinBufferSize(mSampleRate, mChannels, mEncoding);
 							
 							// Set the frame rate based on this result
-							mFrameRate = mBufferSize / ( 2 * mBitRate * mNumberOfChannels / 8 );
-//							Log.e(DeviceUtils.class.getName(), "Audio Record buffer lower than the minimum; buffer changed to minimum");
+							mFrameRate = mBufferSize / ( 2 * mBitRate * mChannelsQuantity / 8 );
+//							Log.e(DeviceUtils.class.getName(), "Audio Record buffer lower than the minimum; buffer changed to minimum permitted");
 						} else {
 							
 //							Log.i(DeviceUtils.class.getName(), "Audio Record buffer is equal or higher than the minimum required");
@@ -411,7 +417,7 @@ public class DeviceUtils {
 						try {
 							
 							// Try to initialize the AudioRecord
-							audioRecord = new AudioRecord(mAudioSource, mSampleRateHz, channelTypes[mNumberOfChannels], mEncodingFormat, mBufferSize);
+							audioRecord = new AudioRecord(mAudioSource, mSampleRate, mChannels, mEncoding, mBufferSize);
 //							Log.i(DeviceUtils.class.getName(), "Audio Record possible initialization");
 						}
 						catch (IllegalArgumentException e) {
@@ -423,9 +429,9 @@ public class DeviceUtils {
 						if (audioRecord.getState() == AudioRecord.STATE_INITIALIZED) {
 							
 							int actualValidSetting[] = { mAudioSource,
-									   			   mSampleRateHz,
-									   			   mNumberOfChannels,
-									   			   mEncodingFormat,
+									   			   mSampleRate,
+									   			   mChannels,
+									   			   mEncoding,
 									   			   mBitRate,
 									   			   mFrameRate,
 									   			   mBufferSize };
@@ -452,8 +458,12 @@ public class DeviceUtils {
 		audioRecord = null;
 		
 		Log.i(DeviceUtils.class.getName(), "Audio Record valid settings: " + validAudioRecordingSettings.size() +" from " + 
-				audioSources.length * sampleRatesHz.length * numbersOfChannels.length * bitRates.length + " tested!") ;
+				audioSources.length * audioSampleRates.length * audioChannels.length * audioEncoding.length + " tested!") ;
 				
+		for(int[] valid : validAudioRecordingSettings) {
+			Log.i(DeviceUtils.class.getName(), Arrays.toString(valid));
+		}
+		
 		return validAudioRecordingSettings.size() > 0? true: false;
 	}
 	
@@ -505,125 +515,4 @@ public class DeviceUtils {
 		
 		return getValidAudioRecordSettings();
 	}
-	
-	/**
-	 * Verify the if the preferences are already set, and load defaults otherwise
-	 * @param context
-	 * @return true if the preferences have been loaded successfully
-	 */
-	public static boolean loadPreferences(Context context) {
-		
-		SharedPreferences sharedPreferences = context.getSharedPreferences(
-				SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
-		
-		// Load default preferences
-		if (sharedPreferences.getAll().size() == 0) {
-			
-			SharedPreferences.Editor editorSharedPreferences = 
-					sharedPreferences.edit();
-			
-			editorSharedPreferences.putInt(recordingFormatPreference_name, 0); // 0 = MP3, 1 = WAVE, 2 = 3GP
-			editorSharedPreferences.putInt(mp3kbpsPreference_name, 32); // 32, 64, 96, 128, 160, 256, 320
-			
-			editorSharedPreferences.putInt(audioSourcePreference_name, MediaRecorder.AudioSource.DEFAULT);
-			editorSharedPreferences.putInt(sampleRateHzPreference_name, 8000);
-			editorSharedPreferences.putInt(channelTypePreference_name, AudioFormat.CHANNEL_IN_DEFAULT);
-			editorSharedPreferences.putInt(encodingFormatPreference_name, AudioFormat.ENCODING_DEFAULT);
-			
-			editorSharedPreferences.putInt(sensorsDelayPreference_name, SensorManager.SENSOR_DELAY_NORMAL);
-			editorSharedPreferences.putInt(sensorsPreferences_name, 0); // -1 = ALL, decimal value converted from a reverse binary representation of the sensors to load, 0 = none 
-			
-			if (!editorSharedPreferences.commit()) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * Update the preferences
-	 * 
-	 * @param context
-	 * @param recordingFormat   0 = MP3, 1 = WAVE, 2 = 3GP
-	 * @param mp3kbps           32, 64, 96, 128, 160, 256, 320
-	 * @param audioSource
-	 * @param sampleRateHz      8000, 11025, 16000, 22015, 44100 , 48000 , 88200 , 96000
-	 * @param channelType
-	 * @param encodingFormat
-	 * @param sensorsDelay      0 = fastest, 1 = game, 2 = ui, 3 = normal
-	 * @param sensors           -1 = ALL, decimal value converted from a reverse binary representation of the sensors to load, 0 = none
-	 * 
-	 * @return true if the preferences have been saves successfully
-	 */
-	public static boolean updatePreferences(Context context,
-			int recordingFormat, int mp3kbps, 
-			int audioSource, int sampleRateHz, int channelType, int encodingFormat, 
-			int sensorsDelay, int sensors) {
-	
-		SharedPreferences sharedPreferences = context.getSharedPreferences(
-				SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
-		
-		SharedPreferences.Editor editorSharedPreferences = 
-				sharedPreferences.edit();
-		
-		editorSharedPreferences.putInt(recordingFormatPreference_name, recordingFormat);
-		editorSharedPreferences.putInt(mp3kbpsPreference_name, mp3kbps);
-		
-		editorSharedPreferences.putInt(audioSourcePreference_name, audioSource);
-		editorSharedPreferences.putInt(sampleRateHzPreference_name, sampleRateHz);
-		editorSharedPreferences.putInt(channelTypePreference_name, channelType);
-		editorSharedPreferences.putInt(encodingFormatPreference_name, encodingFormat);
-		
-		editorSharedPreferences.putInt(sensorsDelayPreference_name, sensorsDelay);
-		editorSharedPreferences.putInt(sensorsPreferences_name, sensors);  
-		
-		if (!editorSharedPreferences.commit()) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * Return the preferences following some definitions:
-	 * 
-	 * <ul>
-	 *  <li> recordingFormat : 0 = MP3, 1 = WAVE, 2 = 3GP </li>  
-	 *  <li> mp3kbps : 32, 64, 96, 128, 160, 256, 320 </li>
-	 *  <li> sensorsDelay : 0 = fastest, 1 = game, 2 = ui, 3 = normal </li>
-	 *  <li> sensors : -1 = ALL, decimal value converted from a reverse binary representation of the sensors to load, 0 = none </li>
-	 * </ul>
-	 * 
-	 * @param context
-	 * @return int[] :  0 - recordingFormat,  
-	 * 					1 - mp3kbps,
-	 * 					2 - audioSource, 
-	 * 					3 - sampleRateHz, 
-	 * 					4 - channelType, 
-	 * 					5 - encodingFormat,
-	 * 					6 - sensorsDelay,
-	 * 					7 - sensors 
-	 */
-	public static int[] getSharedPreferences(Context context) {
-	
-		int[] preferences = new int[8];
-		
-		SharedPreferences sharedPreferences = context.getSharedPreferences(
-				SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
-		
-		preferences[0] = sharedPreferences.getInt(recordingFormatPreference_name, 0);
-		preferences[1] = sharedPreferences.getInt(mp3kbpsPreference_name, 32); 
-		
-		preferences[2] = sharedPreferences.getInt(audioSourcePreference_name, MediaRecorder.AudioSource.DEFAULT);
-		preferences[3] = sharedPreferences.getInt(sampleRateHzPreference_name, 8000);
-		preferences[4] = sharedPreferences.getInt(channelTypePreference_name, AudioFormat.CHANNEL_IN_DEFAULT);
-		preferences[5] = sharedPreferences.getInt(encodingFormatPreference_name, AudioFormat.ENCODING_DEFAULT);
-		
-		preferences[6] = sharedPreferences.getInt(sensorsDelayPreference_name, SensorManager.SENSOR_DELAY_NORMAL);
-		preferences[7] = sharedPreferences.getInt(sensorsPreferences_name, 0); 
-		
-		return preferences;
-	}
-	
 }

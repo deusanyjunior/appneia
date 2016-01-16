@@ -1,11 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="sensorsdelay">
-        <item>Fastest</item>
-        <item>Game</item>
-        <item>User interface</item>
-        <item>Normal</item>
+    <string-array name="sensorSampleRate_id">
+        <item>0</item> <!-- SensorManager.SENSOR_DELAY_FASTEST -->
+        <item>1</item> <!-- SensorManager.SENSOR_DELAY_GAME -->
+        <item>2</item> <!-- SensorManager.SENSOR_DELAY_UI -->
+        <item>3</item> <!-- SensorManager.SENSOR_DELAY_NORMAL (Default) -->
+    </string-array>
+    
+    <string-array name="sensorSampleRate">
+        <item>Fastest</item> <!-- SensorManager.SENSOR_DELAY_FASTEST -->
+        <item>Game</item> <!-- SensorManager.SENSOR_DELAY_GAME -->
+        <item>User interface</item> <!-- SensorManager.SENSOR_DELAY_UI -->
+        <item>Normal</item> <!-- SensorManager.SENSOR_DELAY_NORMAL (Default) -->
+    </string-array>
+    
+    <string-array name="sensors_id">
+        <item>1</item> <!-- Sensor.TYPE_ACCELEROMETER  -->
+        <item>2</item> <!-- Sensor.TYPE_MAGNETIC_FIELD -->
+        <item>3</item> <!-- Sensor.TYPE_ORIENTATION -->
+        <item>4</item> <!-- Sensor.TYPE_GYROSCOPE -->
+        <item>5</item> <!-- Sensor.TYPE_LIGHT -->
+        <item>6</item> <!-- Sensor.TYPE_PRESSURE -->
+        <item>7</item> <!-- Sensor.TYPE_TEMPERATURE -->
+        <item>8</item> <!-- Sensor.TYPE_PROXIMITY -->
+        <item>9</item> <!-- Sensor.TYPE_GRAVITY -->
+        <item>10</item> <!-- Sensor.TYPE_LINEAR_ACCELERATION -->
+        <item>11</item> <!-- Sensor.TYPE_ROTATION_VECTOR -->
+        <item>12</item> <!-- Sensor.TYPE_RELATIVE_HUMIDITY -->
+        <item>13</item> <!-- Sensor.TYPE_AMBIENT_TEMPERATURE -->
+        <item>14</item> <!-- Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED -->
+        <item>15</item> <!-- Sensor.TYPE_GAME_ROTATION_VECTOR -->
+        <item>16</item> <!-- Sensor.TYPE_GYROSCOPE_UNCALIBRATED -->
+        <item>17</item> <!-- Sensor.TYPE_SIGNIFICANT_MOTION -->
+        <item>18</item> <!-- Sensor.TYPE_STEP_DETECTOR -->
+        <item>19</item> <!-- Sensor.TYPE_STEP_COUNTER -->
+        <item>20</item> <!-- Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR -->
+        <item>21</item> <!-- Sensor.TYPE_HEART_RATE -->
+        <item>22</item> <!-- Sensor.TYPE_TILT_DETECTOR -->
+        <item>23</item> <!-- Sensor.TYPE_WAKE_GESTURE -->
+        <item>24</item> <!-- Sensor.TYPE_GLANCE_GESTURE -->
+        <item>25</item> <!-- Sensor.TYPE_PICK_UP_GESTURE -->
+        <item>26</item> <!-- Sensor.TYPE_WRIST_TILT_GESTURE -->
+    </string-array>
+    
+    <string-array name="sensors">
+        <item>Accelerometer</item> <!-- Sensor.TYPE_ACCELEROMETER  -->
+        <item>Magnetic field</item> <!-- Sensor.TYPE_MAGNETIC_FIELD -->
+        <item>Orientation</item> <!-- Sensor.TYPE_ORIENTATION -->
+        <item>Gyroscope</item> <!-- Sensor.TYPE_GYROSCOPE -->
+        <item>Light</item> <!-- Sensor.TYPE_LIGHT -->
+        <item>Pressure</item> <!-- Sensor.TYPE_PRESSURE -->
+        <item>Temperature</item> <!-- Sensor.TYPE_TEMPERATURE -->
+        <item>Proximity</item> <!-- Sensor.TYPE_PROXIMITY -->
+        <item>Gravity</item> <!-- Sensor.TYPE_GRAVITY -->
+        <item>Linear acceleration</item> <!-- Sensor.TYPE_LINEAR_ACCELERATION -->
+        <item>Rotation vector</item> <!-- Sensor.TYPE_ROTATION_VECTOR -->
+        <item>Relative humidity</item> <!-- Sensor.TYPE_RELATIVE_HUMIDITY -->
+        <item>Ambient temperature</item> <!-- Sensor.TYPE_AMBIENT_TEMPERATURE -->
+        <item>Magnetic field uncalibrated</item> <!-- Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED -->
+        <item>Game rotation vector</item> <!-- Sensor.TYPE_GAME_ROTATION_VECTOR -->
+        <item>Gyroscope uncalibrated</item> <!-- Sensor.TYPE_GYROSCOPE_UNCALIBRATED -->
+        <item>Significant motion</item> <!-- Sensor.TYPE_SIGNIFICANT_MOTION -->
+        <item>Step detector</item> <!-- Sensor.TYPE_STEP_DETECTOR -->
+        <item>Step counter</item> <!-- Sensor.TYPE_STEP_COUNTER -->
+        <item>Geomagnetic rotation vector</item> <!-- Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR -->
+        <item>Heart rate</item> <!-- Sensor.TYPE_HEART_RATE -->
+        <item>Tilt detector</item> <!-- Sensor.TYPE_TILT_DETECTOR -->
+        <item>Wake gesture</item> <!-- Sensor.TYPE_WAKE_GESTURE -->
+        <item>Glance gesture</item> <!-- Sensor.TYPE_GLANCE_GESTURE -->
+        <item>Pick up gesture</item> <!-- Sensor.TYPE_PICK_UP_GESTURE -->
+        <item>Wrist tilt gesture</item> <!-- Sensor.TYPE_WRIST_TILT_GESTURE -->
     </string-array>
     
 </resources>

@@ -3,14 +3,17 @@
  */
 package br.usp.appneia;
 
+import br.usp.appneia.R;
 import br.usp.appneia.newrecord.BeforeSleepFormActivity;
-import br.usp.appneia.settings.DeviceUtils;
-import br.usp.appneia.settings.SettingsActivity;
-import android.app.Activity;
+import br.usp.appneia.preferences.PreferencesActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,7 +21,7 @@ import android.widget.Button;
  * @author dj
  *
  */
-public class AppneiaActivity extends Activity {
+public class AppneiaActivity extends AppCompatActivity {
 
 	Context context = this;
 	
@@ -29,16 +32,31 @@ public class AppneiaActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appneia);
 		
-		DeviceUtils.loadPreferences(context);
+//		DeviceUtils.loadPreferences(context);
 		setupButtons();
 	}
 	
 	@Override
-	public void onBackPressed() {
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 		
-		//TODO: ask user or
-		finish(); // 'him!
-		super.onBackPressed();
+		switch (item.getItemId()) {
+		case R.id.menu_item_preferences:
+			
+			Intent intentPreferences = new Intent(AppneiaActivity.this, PreferencesActivity.class);
+			startActivity(intentPreferences);
+			break;
+
+		default:
+			break;
+		}
+		return true;
 	}
 		
 	/**
@@ -49,11 +67,8 @@ public class AppneiaActivity extends Activity {
 		Button buttonNewRecord = (Button) findViewById(R.id.buttonNewRecord);
 		buttonNewRecord.setOnClickListener(onClickListenerButtonNewRecord());
 		
-		Button buttonPastRecords = (Button) findViewById(R.id.buttonStoredRecords);
-		buttonPastRecords.setOnClickListener(onClickListenerButtonPastRecords());
-		
-		Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
-		buttonSettings.setOnClickListener(onClickListenerButtonSettings());
+//		Button buttonPastRecords = (Button) findViewById(R.id.buttonStoredRecords);
+//		buttonPastRecords.setOnClickListener(onClickListenerButtonPastRecords());
 	}
 	
 	/**
@@ -79,35 +94,18 @@ public class AppneiaActivity extends Activity {
 	 * Define the action of button Past Records
 	 * @return the listener action that starts PastRecordsActivity
 	 */
-	private View.OnClickListener onClickListenerButtonPastRecords() {
-		
-		return new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				Intent intentPastRecords = new Intent(context, PastRecordsActivity.class);
-				startActivity(intentPastRecords);
-//				finish(); // in this case it isn't necessary
-			}
-		};
-	}
+//	private View.OnClickListener onClickListenerButtonPastRecords() {
+//		
+//		return new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				
+//				Intent intentPastRecords = new Intent(context, PastRecordsActivity.class);
+//				startActivity(intentPastRecords);
+////				finish(); // in this case it isn't necessary
+//			}
+//		};
+//	}
 	
-	/**
-	 * Define the action of button Settings
-	 * @return the listener action that starts SettingsActivity
-	 */
-	private View.OnClickListener onClickListenerButtonSettings() {
-		
-		return new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				Intent intentSettings = new Intent(context, SettingsActivity.class);
-				startActivity(intentSettings);
-//				finish(); // in this case it isn't necessary
-			}
-		};
-	}
 }

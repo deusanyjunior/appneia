@@ -1,59 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string-array name="mp3kbps">
+    <!-- Audio recording formats -->
+    <string-array name="audioRecordingFormat">
+        <item>MP3</item>
+        <item>WAVE</item>
+        <item>3GP</item>
+    </string-array>
+    
+    <!-- MP3 kbps possible values -->
+    <string-array name="audioMP3kbps">
         <item>32</item>
         <item>64</item>
         <item>96</item>
         <item>128</item>
         <item>160</item>
         <item>256</item>
-        <item>320</item>
     </string-array>
-    
-    <string-array name="audiosources"> <!-- MediaRecorder.AudioSource -->
-        <item>Padrão</item>
-        <item>Microfone</item>
-        <item>Transmissão de voz (Tx)</item>
-        <item>Recepção de voz (Rx)</item>
-        <item>Áudio durante ligação</item>
-        <item>Mic da câmera</item> <!-- CAMCODER -->
-        <item>Reconhecimento de voz</item>
-        <item>Mic para comunicação (VoIP)</item>
-        <item>Áudio de submix remoto</item>
-    </string-array>
-    
-    <string-array name="samplerateshz">
+       
+    <!-- Audio sample rate possible values -->
+    <string-array name="audioSampleRates">
         <item>8000</item>
         <item>11025</item>
         <item>16000</item>
         <item>22015</item>
-        <item>44100</item>
+        <item>44100</item> <!-- Guaranteed in all devices -->
         <item>48000</item>
         <item>88200</item>
         <item>96000</item>
     </string-array>
     
-    <string-array name="numberofchannels">
-        <item>1</item>
+    <!-- Number of channels available -->
+    <string-array name="audioNumberOfChannels">
+        <item>1</item> <!-- Guaranteed in all devices -->
         <item>2</item>
     </string-array>
     
-    <string-array name="channeltypes"> <!-- AudioFormat -->
-        <item>Padrão</item> <!-- AudioFormat.CHANNEL_IN_DEFAULT -->
-        <item>Mono</item> <!-- AudioFormat.CHANNEL_IN_MONO -->
+    
+    <!-- ANDROID Variables related to audio -->
+    
+    <string-array name="audioSources_id"> <!-- MediaRecorder.AudioSource -->
+        <item>0</item> <!-- Default -->
+        <item>1</item> <!-- Mic -->
+        <item>2</item> <!-- VOICE_UPLINK -->
+        <item>3</item> <!-- VOICE_DOWNLINK -->
+        <item>4</item> <!-- VOICE_CALL -->
+        <item>5</item> <!-- CAMCORDER -->
+        <item>6</item> <!-- VOICE_RECOGNITION -->
+        <item>7</item> <!-- VOICE_COMMUNICATION -->
+        <item>8</item> <!-- REMOTE_SUBMIX -->
+    </string-array>
+    
+    <string-array name="audioSources"> <!-- MediaRecorder.AudioSource -->
+        <item>Padrão</item> <!-- Default -->
+        <item>Microfone</item> <!-- Mic -->
+        <item>Transmissão de voz (Tx)</item> <!-- VOICE_UPLINK -->
+        <item>Recepção de voz (Rx)</item> <!-- VOICE_DOWNLINK -->
+        <item>Áudio durante ligação</item> <!-- VOICE_CALL -->
+        <item>Mic da câmerac</item> <!-- CAMCORDER -->
+        <item>Mic para reconhecimento de voz</item> <!-- VOICE_RECOGNITION -->
+        <item>Mic para comunicação (VoIP)</item> <!-- VOICE_COMMUNICATION -->
+        <item>Áudio de submix remoto</item> <!-- REMOTE_SUBMIX -->
+    </string-array>
+    
+    <string-array name="audioChannels_id">
+        <item>1</item> <!-- AudioFormat.CHANNEL_IN_DEFAULT -->
+        <item>16</item> <!-- AudioFormat.CHANNEL_IN_MONO is guaranteed in all devices--> 
+        <item>12</item> <!-- AudioFormat.CHANNEL_IN_STEREO -->
+    </string-array>
+    
+    <string-array name="audioChannels"> <!-- AudioFormat -->
+        <item>Default</item> <!-- AudioFormat.CHANNEL_IN_DEFAULT -->
+        <item>Mono</item> <!-- AudioFormat.CHANNEL_IN_MONO is guaranteed in all devices-->
         <item>Estéreo</item> <!-- AudioFormat.CHANNEL_IN_STEREO -->
     </string-array>
-
-    <string-array name="bitrates">
-        <item>16</item>
-        <item>8</item>
+    
+    <string-array name="audioEncoding_id"> <!-- AudioFormat -->
+        <item>2</item> <!-- ENCODING_PCM_16BIT is guaranteed in all devices -->
+        <item>3</item> <!-- ENCODING_PCM_8BIT -->
+        <item>4</item> <!-- ENCODING_PCM_FLOAT -->
     </string-array>
     
-    <string-array name="encodingformats"> <!-- AudioFormat -->
-        <item>16 bits</item> <!-- ENCODING_PCM_16BIT -->
+    <string-array name="audioEncoding"> <!-- AudioFormat -->
+        <item>16 bits</item> <!-- ENCODING_PCM_16BIT is guaranteed in all devices -->
         <item>8 bits</item> <!-- ENCODING_PCM_8BIT -->
+        <item>32 bits</item> <!-- ENCODING_PCM_FLOAT -->
     </string-array>
-    
-    
+
 </resources>

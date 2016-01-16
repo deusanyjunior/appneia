@@ -5,11 +5,13 @@ package br.usp.appneia.newrecord;
 
 import br.usp.appneia.AppneiaActivity;
 import br.usp.appneia.R;
-import br.usp.appneia.settings.DeviceUtils;
+import br.usp.utils.DeviceUtils;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -44,13 +46,26 @@ public class AfterSleepFormActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		
-		//TODO: ask user
-		try {
-			finalize();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new AlertDialog.Builder(this)
+        .setTitle(R.string.alert_finish_monitoring_title)
+        .setMessage(R.string.alert_finish_monitoring_message)
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+        	@Override
+        	public void onClick(DialogInterface arg0, int arg1) {
+        		try {
+        		
+        			Intent intentSave = new Intent(context, AppneiaActivity.class);
+        			startActivity(intentSave);
+        			finalize();
+        		} catch (Throwable e) {
+        			e.printStackTrace();
+        		}
+        		AfterSleepFormActivity.super.onBackPressed();
+            }
+
+        }).create().show();
 	}
 	
 	/**
@@ -77,16 +92,17 @@ public class AfterSleepFormActivity extends Activity {
 					
 					if (saveAnswers()) {
 						
+						Toast.makeText(context, R.string.after_sleep_success, Toast.LENGTH_LONG).show();
 						Intent intentSave = new Intent(context, AppneiaActivity.class);
 						startActivity(intentSave);
 						finish();
 					} else {
 						
-						Toast.makeText(context, activity.getResources().getString(R.string.error_saving), Toast.LENGTH_LONG).show();
+						Toast.makeText(context, R.string.error_saving, Toast.LENGTH_LONG).show();
 					}
 				} else {
 					
-					Toast.makeText(context, activity.getResources().getString(R.string.error_form), Toast.LENGTH_LONG).show();
+					Toast.makeText(context, R.string.error_form, Toast.LENGTH_LONG).show();
 				}
 			}
 		};
@@ -120,7 +136,7 @@ public class AfterSleepFormActivity extends Activity {
 	 */
 	private boolean saveAnswers() {
 		
-		//TODO: unsafe conversions!
+		//TODO: change unsafe conversions!
 		try {
 			 
 			String fileNameRecordAnswers = getResources().getString(R.string.file_record_answers);
@@ -133,9 +149,9 @@ public class AfterSleepFormActivity extends Activity {
 			answers.append(this.getResources().getString(R.string.after_sleep_form));
 			answers.append("\n");
 			answers.append(answer1);
-			answers.append(" ");
+			answers.append(", ");
 			answers.append(answer2);
-			answers.append(" ");
+			answers.append(", ");
 			answers.append(answer3);
 			answers.append("\n");
 			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordAnswers, answers.toString());

@@ -9,11 +9,13 @@ import java.util.Locale;
 
 import br.usp.appneia.AppneiaActivity;
 import br.usp.appneia.R;
-import br.usp.appneia.settings.DeviceUtils;
+import br.usp.utils.DeviceUtils;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -49,16 +51,26 @@ public class BeforeSleepFormActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		
-		//TODO: ask user
-		try {
-			Intent intentSave = new Intent(context, AppneiaActivity.class);
-			startActivity(intentSave);
-			finalize();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		super.onBackPressed();
+	    new AlertDialog.Builder(this)
+        .setTitle(R.string.alert_finish_monitoring_title)
+        .setMessage(R.string.alert_finish_monitoring_message)
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+        	@Override
+        	public void onClick(DialogInterface arg0, int arg1) {
+        		try {
+        		
+        			Intent intentSave = new Intent(context, AppneiaActivity.class);
+        			startActivity(intentSave);
+        			finalize();
+        		} catch (Throwable e) {
+        			e.printStackTrace();
+        		}
+        		BeforeSleepFormActivity.super.onBackPressed();
+            }
+
+        }).create().show();		
 	}
 	
 	private boolean createRecorderFile() {
@@ -160,9 +172,9 @@ public class BeforeSleepFormActivity extends Activity {
 			answers.append(this.getResources().getString(R.string.before_sleep_form));
 			answers.append("\n");
 			answers.append(answer1);
-			answers.append(" ");
+			answers.append(", ");
 			answers.append(answer2);
-			answers.append(" ");
+			answers.append(", ");
 			answers.append(answer3);
 			return DeviceUtils.writeDataOnFile(recordFolderPath, fileNameRecordAnswers, answers.toString());
 		} catch (NullPointerException e) {

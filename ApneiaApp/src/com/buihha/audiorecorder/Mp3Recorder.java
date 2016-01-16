@@ -21,8 +21,8 @@ public class Mp3Recorder {
 		System.loadLibrary("mp3lame");
 	}
 
-	private static final int DEFAULT_SAMPLING_RATE = 22050;
-//	private static final int DEFAULT_SAMPLING_RATE = 44100;
+//	private static final int DEFAULT_SAMPLING_RATE = 22050;
+	private static final int DEFAULT_SAMPLING_RATE = 44100;
 	
 	private static final int FRAME_COUNT = 160;
 
@@ -53,9 +53,20 @@ public class Mp3Recorder {
 	
 	private boolean isRecording = false;
 
+	/**
+	 * Initialize the recorder
+	 * @param recordFolderPath
+	 * @param mp3kbps
+	 * @param audioSource
+	 * @param samplingRate
+	 * @param channelConfig
+	 * @param audioFormat
+	 */
 	public Mp3Recorder(String recordFolderPath,
 			int mp3kbps,
-			int audioSource, int samplingRate, int channelConfig,
+			int audioSource, 
+			int samplingRate, 
+			int channelConfig,
 			int audioFormat) {
 		this.recordFolderPath = recordFolderPath;
 		this.mp3kbps = mp3kbps;

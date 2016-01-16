@@ -2,31 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context=".AppneiaActivity" >
 
     <Button
         android:id="@+id/buttonNewRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_centerVertical="true"
         android:text="@string/new_record" />
-
-    <Button
-        android:id="@+id/buttonStoredRecords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonNewRecord"
-        android:layout_centerHorizontal="true"
-        android:text="@string/stored_records" />
-
-    <Button
-        android:id="@+id/buttonSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonStoredRecords"
-        android:layout_centerHorizontal="true"
-        android:text="@string/settings" />
 
 </RelativeLayout>

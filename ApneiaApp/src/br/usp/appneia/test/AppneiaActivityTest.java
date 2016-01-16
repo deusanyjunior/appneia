@@ -4,10 +4,9 @@
 package br.usp.appneia.test;
 
 import br.usp.appneia.AppneiaActivity;
-import br.usp.appneia.PastRecordsActivity;
+//import br.usp.appneia.PastRecordsActivity;
 import br.usp.appneia.R;
 import br.usp.appneia.newrecord.BeforeSleepFormActivity;
-import br.usp.appneia.settings.SettingsActivity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
@@ -24,8 +23,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 	
 	private AppneiaActivity mAppneiaActivity;
 	private Button mButtonNewRecord;
-	private Button mButtonStoredRecords;
-	private Button mButtonSettings;
+//	private Button mButtonStoredRecords;
 	
 	public AppneiaActivityTest() {
 		
@@ -40,8 +38,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 		
 		mAppneiaActivity = getActivity();
 		mButtonNewRecord = (Button) mAppneiaActivity.findViewById(R.id.buttonNewRecord);
-		mButtonStoredRecords = (Button) mAppneiaActivity.findViewById(R.id.buttonStoredRecords);
-		mButtonSettings = (Button) mAppneiaActivity.findViewById(R.id.buttonSettings);
+//		mButtonStoredRecords = (Button) mAppneiaActivity.findViewById(R.id.buttonStoredRecords);
 	}
 
 	/**
@@ -51,8 +48,7 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 		
 		assertNotNull("mAppneiaActivity is null", mAppneiaActivity);
 		assertNotNull("mButtonNewRecord is null", mButtonNewRecord);
-		assertNotNull("mButtonStoredRecords is null", mButtonStoredRecords);
-		assertNotNull("mButtonSettings is null", mButtonSettings);
+//		assertNotNull("mButtonStoredRecords is null", mButtonStoredRecords);
 	}
 	
 	/**
@@ -86,57 +82,29 @@ public class AppneiaActivityTest extends ActivityInstrumentationTestCase2<Appnei
 	/**
 	 * Test button PastRecords
 	 */
-	public void testAppneiaActivityButtonPastRecords() {
-		
-		final String expectedLabel = mAppneiaActivity.getString(R.string.stored_records);
-		final String actualLabel = mButtonStoredRecords.getText().toString();
-		assertEquals(expectedLabel, actualLabel);
-		
-		ActivityMonitor mPastRecordsActivityMonitor = getInstrumentation()
-				.addMonitor(PastRecordsActivity.class.getName(), null, false);
-		
-		TouchUtils.clickView(this, mButtonStoredRecords);
-		PastRecordsActivity mPastRecordsActivity = (PastRecordsActivity)
-				mPastRecordsActivityMonitor.waitForActivityWithTimeout(TIMEOUT_IN_MS);
-		
-		assertNotNull("PastRecordsActivity is null", mPastRecordsActivity);
-		assertEquals("Monitor for PastRecordsActivity has not been called",
-				1, mPastRecordsActivityMonitor.getHits());
-		assertEquals("PastRecordsActivity is of wrong type",
-				PastRecordsActivity.class, mPastRecordsActivity.getClass());
-		
-		getInstrumentation().removeMonitor(mPastRecordsActivityMonitor);
-		
-		// TODO: verify a better solution
-		this.sendKeys(KeyEvent.KEYCODE_BACK);
-	}
-	
-	/**
-	 * Test button Settings
-	 */
-	public void testAppneiaActivityButtonSettings() {
-		
-		final String expectedLabel = mAppneiaActivity.getString(R.string.settings);
-		final String actualLabel = mButtonSettings.getText().toString();
-		assertEquals(expectedLabel, actualLabel);
-		
-		ActivityMonitor mSettingsActivityMonitor = getInstrumentation()
-				.addMonitor(SettingsActivity.class.getName(), null, false);
-		
-		TouchUtils.clickView(this, mButtonSettings);
-		SettingsActivity mSettingsActivity = (SettingsActivity)
-				mSettingsActivityMonitor.waitForActivityWithTimeout(TIMEOUT_IN_MS);
-		
-		assertNotNull("SettingsActivity is null", mSettingsActivity);
-		assertEquals("Monitor for SettingsActivity has not been called",
-				1, mSettingsActivityMonitor.getHits());
-		assertEquals("SettingsActivity is of wrong type",
-				SettingsActivity.class, mSettingsActivity.getClass());
-		
-		getInstrumentation().removeMonitor(mSettingsActivityMonitor);
-		
-		// TODO: verify a better solution
-		this.sendKeys(KeyEvent.KEYCODE_BACK);
-	}
+//	public void testAppneiaActivityButtonPastRecords() {
+//		
+//		final String expectedLabel = mAppneiaActivity.getString(R.string.stored_records);
+//		final String actualLabel = mButtonStoredRecords.getText().toString();
+//		assertEquals(expectedLabel, actualLabel);
+//		
+//		ActivityMonitor mPastRecordsActivityMonitor = getInstrumentation()
+//				.addMonitor(PastRecordsActivity.class.getName(), null, false);
+//		
+//		TouchUtils.clickView(this, mButtonStoredRecords);
+//		PastRecordsActivity mPastRecordsActivity = (PastRecordsActivity)
+//				mPastRecordsActivityMonitor.waitForActivityWithTimeout(TIMEOUT_IN_MS);
+//		
+//		assertNotNull("PastRecordsActivity is null", mPastRecordsActivity);
+//		assertEquals("Monitor for PastRecordsActivity has not been called",
+//				1, mPastRecordsActivityMonitor.getHits());
+//		assertEquals("PastRecordsActivity is of wrong type",
+//				PastRecordsActivity.class, mPastRecordsActivity.getClass());
+//		
+//		getInstrumentation().removeMonitor(mPastRecordsActivityMonitor);
+//		
+//		// TODO: verify a better solution
+//		this.sendKeys(KeyEvent.KEYCODE_BACK);
+//	}
 	
 }

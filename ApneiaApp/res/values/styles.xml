@@ -10,6 +10,11 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <!-- <item name="android:windowNoTitle">false</item> -->
+		<!-- <item name="android:windowActionBar">true</item> -->
+		<item name="windowActionBar">true</item>
+		<!-- <item name="logo">@drawable/ic_launcher</item> -->
+		<!-- <item name="displayOptions">useLogo|showHome</item> -->
     </style>
 
     <!-- Application theme. -->
